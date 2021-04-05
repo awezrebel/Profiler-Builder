@@ -1,0 +1,98 @@
+create schema database1;
+create table login(
+uname varchar(20)  primary key ,
+pwd varchar(10)  not null,
+name varchar(30)
+
+
+);
+
+create table profile(
+rollno varchar(20) primary key,
+username varchar(10) ,
+dob varchar(10),
+mobile numeric(10),
+cgpa float(10),
+projects varchar(100) ,
+images varchar(10000),
+remarks varchar(1000),
+mother varchar(100),
+father varchar(100),
+parentmobile varchar(100),
+address varchar(100),
+mail varchar(100)
+);
+
+drop table workshops;
+create table workshops(
+certificateid varchar(20) primary key,
+rollno varchar(30) ,
+Organisation varchar(50),
+duration  varchar(30),
+Objective varchar(30),
+Tools varchar(100),
+Outcome varchar(100)
+);
+INSERT INTO `database1`.`workshops` (`certificateid`,`rollno`, `Organisation`, `duration`, `Objective`,`Tools`,`Outcome`) VALUES ('E_3452','cb.en.u4cse18148', 'Quadcopter at Amrita University', '13-02-2019 to 15-02-2019', 'Remote Sensing','Arduino Software,ESC’S,Radio Transmitters,receivers','Collection of in-depth and higher detail data');
+ 
+UPDATE workshops SET Organisation = 'narayana' , duration='12/03/24' where rollno ='123'; 
+create table skills(
+rollno varchar(30) primary key,
+languages varchar (50),
+web varchar(50),
+tools varchar(100)
+);
+
+INSERT INTO `database1`.`skills` (`rollno`, `languages`, `web`, `tools`) VALUES ('cb.en.u4cse18148', 'C Java Python', 'Html , JavaScript, EJS, Node js , MYSQL', 'Visual studio, Eclipse , Jupyter,Mysql work bench, Aws , Cisco Packet Tracer');
+
+drop table Achievements;
+create table Achievements(
+rollno varchar(30) ,
+Name varchar(100),
+Details varchar(1000),
+Location varchar(100)
+);
+
+INSERT INTO `database1`.`Achievements` (`rollno`, `Name`, `Details`, `Location`) VALUES ('cb.en.u4cse18148', 'Gold medal,cetificates', 'Hydraulic Bridge With Syringes, Street lights With Sensor', 'Science Fair Project at Narayana High school in 2014');
+
+
+create table teachers(
+name varchar(30) primary key,
+qualification varchar(20),
+designation varchar(30),
+university varchar(30),
+expert varchar(30),
+projects varchar(50),
+recognisations varchar(100)
+);
+
+ 
+create table projects(
+rollno varchar(30),
+Topic varchar(100) primary key,
+Duration	varchar(100),
+Objective varchar(100),
+Tools varchar(100),
+Outcome varchar(100)
+);
+DROP TABLE projects;
+INSERT INTO `database1`.`projects`(`rollno`, `Topic`,`Duration`,`Objective`,`Tools`,`Outcome`) VALUES('cb.en.u4cse18148','Online Shopping','20 days','Customers Can Purchase items from the comfort of their own homes or work place','Java Script , node js ,Aws(RDS,S3 GLACIER,EC2,LAMBDA) , Twilio(for OTP Services),Visual Studio,MYSQL','Saves time');
+INSERT INTO `database1`.`projects` (`rollno`,`Topic`, `Duration`, `Objective`, `Tools`, `Outcome`) VALUES ('cb.en.u4cse18148','Online Examination', '10 days', 'Allows users to take Online tests and Automatically generates results based on answers marked by users', 'Java Script , node js , Visual Studio, Dia tool', 'Quick Reslut Processing');
+INSERT INTO `database1`.`projects` (`rollno`, `Topic`, `Duration`, `Objective`, `Tools`, `Outcome`) VALUES ('cb.en.u4cse18148', 'Profile Builder', 'In Progress', 'Students Can contact The Teachers according to their Research intrests', 'Java Script , node js ,Aws(RDS) , Twilio(for OTP Services),Visual Studio,MYSQL', 'Accuracy in finding data');
+
+select name from login where uname='cb.en.u4cse18148';
+drop table profile;
+INSERT INTO `database1`.`login` (`uname`, `pwd`, `name`) VALUES ('cb.en.u4cse18148', 'shaik12', 'shaik awez');
+INSERT INTO `database1`.`login` (`uname`, `pwd`, `name`) VALUES ('cb.en.u4cse18117', 'lokeesh12', 'lokesh ');
+INSERT INTO `database1`.`login` (`uname`, `pwd`, `name`) VALUES ('cb.en.u4cse18137', 'pavan12', 'pavan kruthik');
+INSERT INTO `database1`.`login` (`uname`, `pwd`, `name`) VALUES ('cb.en.u4cse18136', 'pruthve12', 'pruthve rej');
+INSERT INTO `database1`.`login` (`uname`, `pwd`, `name`) VALUES ('cb.en.u4cse18138', 'upendra12', 'upendra');
+
+
+INSERT INTO `database1`.`profile` (`rollno`,`username`, `dob`, `mobile`, `cgpa`,`projects` , `images`,`remarks`, `mother`, `father`, `parentmobile`, `address`,`mail`) VALUES ('cb.en.u4cse18148','shaik awez', '23/12/2000', '6303731463', '7', 'university portal , online shopping website(using aws)',  'https://drive.google.com/thumbnail?id=1OqdQF1aJIJtOrSWGUrmIGRjY-7xw3Xel','No','shaik Habeeb', 'shaik Jaleel', '9441234780' , 'Buchi reddy palem , Nellore,Ap','shaikjalil123@gmail.com');
+INSERT INTO `database1`.`profile` (`rollno`,`username`, `dob`, `mobile`, `cgpa`,`projects`, `images`,`remarks`, `mother`, `father`, `parentmobile`, `address`,`mail`) VALUES ('cb.en.u4cse18136','pruthve ',  '12/02/2000', '9381044045', '7','','https://drive.google.com/thumbnail?id=1tTJclKacClIQAmLMKfWZKpbPilyS_Psw','No','','','','','');
+INSERT INTO `database1`.`profile` (`rollno`,`username`, `dob`, `mobile`, `cgpa`,`projects`,`images`,`remarks`, `mother`, `father`, `parentmobile`, `address`,`mail`) VALUES ('cb.en.u4cse18138','upendra', '20/10/2000', '9182410276', '7.5','','https://drive.google.com/thumbnail?id=1rgWZdCLohwo4EpqVVmJ_AXu202O7WqJE','No','','','','','');
+INSERT INTO `database1`.`profile` (`rollno`,`username`, `dob`, `mobile`, `cgpa`,`projects` , `images`,`remarks`, `mother`, `father`, `parentmobile`, `address`,`mail`) VALUES ('cb.en.u4cse18137','pavan ',  '24/10/2000', '834190089', '7.2','','https://drive.google.com/thumbnail?id=1jpiMD_5OwA1qWc8HOcXgC8WJ9pobTet3','No','','','','','');
+ 
+select username,rollno, username, dob, mobile, cgpa, images from profile WHERE rollno='cb.en.u4cse18148';
+truncate table login;

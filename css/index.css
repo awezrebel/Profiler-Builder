@@ -1,0 +1,15 @@
+.button .inner{
+    margin: 2rem;
+}
+#b1{
+    padding: 0.4rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+#b2{
+    padding: 0.4rem !important;
+}
+#b3{
+    margin-left: 0.75rem;
+    padding: 0.75rem !important;
+}

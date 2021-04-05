@@ -1,0 +1,29 @@
+create schema mydb;
+create table logindetails(
+fname varchar(20) primary key,
+lname varchar(20),
+uname varchar(20),
+mail varchar(30),
+pwd varchar(20),
+pwdconfirm varchar(20));
+
+truncate table logindetails;
+
+create table purchase(
+username varchar(20) primary key,
+password varchar(20),
+productmodel varchar(20),
+price varchar(20),
+paymentmode varchar(20),
+receiptid  varchar(20));
+
+truncate table purchase;
+
+create table delivery(
+mailid varchar(20),
+address varchar(100),
+district varchar(20),
+pincode varchar(20),	
+mobile varchar(20));
+
+truncate table delivery;
