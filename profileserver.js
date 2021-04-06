@@ -81,7 +81,7 @@ c+=1;
 
 //connection with database
 //aws rds
-
+/*
 var connection = mysql.createConnection({
 host: "database-1.cxg5ddbyrmb4.us-east-1.rds.amazonaws.com",
 user: "admin",
@@ -89,10 +89,10 @@ password: "12345678",
 port: "3306",
 database: "database1"
 });
-
+*/
 
 //localhost
-/*
+
 var connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
@@ -100,7 +100,7 @@ var connection = mysql.createConnection({
         port: '3306',
        database: 'database1',
 });
-*/
+
 
 if(uname!=null){
 res.sendfile("otp.html");

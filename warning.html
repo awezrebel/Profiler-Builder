@@ -49,6 +49,9 @@ body{
   opacity: 1;
   right: 0;
 }
+body{
+  text-align: center;
+}
 </style>
 <title>Document</title>
 <form method="GET", action="http://localhost:8000/">      
@@ -68,14 +71,14 @@ body{
     <body onLoad="noBack();" onpageshow="if (event.persisted) noBack();" onUnload="">
     
 
-<center>
+ 
  
 <h1>Do you want to logout for sure ? </h1><br> </br>
 
 <button  class="button" formaction="/logout"><span>yes</span></button> 
 <button   class="button" formaction="/data"><span>no</span></button> 
 </div>
-</center>  
+ 
 
 
 <script type = "text/javascript" >
