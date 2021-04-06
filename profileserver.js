@@ -85,7 +85,7 @@ c+=1;
 var connection = mysql.createConnection({
 host: "database-1.cxg5ddbyrmb4.us-east-1.rds.amazonaws.com",
 user: "admin",
-password: "SE@Profile-Builder#",
+password: "SE@Profile-Builder#$%1234",
 port: "3306",
 database: "database1"
 });
