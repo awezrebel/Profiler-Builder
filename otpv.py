@@ -1,7 +1,7 @@
 import twilio
 import random
 from twilio.rest import Client 
-otp = random.randint(1000, 9999)
+otp = random.randint(100000, 999999)
 f = open( 'otp.txt', 'w' )
 f.write(str(otp))
 f.close()
