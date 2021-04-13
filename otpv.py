@@ -1,17 +1,16 @@
 import twilio
 import random
 from twilio.rest import Client 
-otp = random.randint(100000, 999999)
+otp = random.randint(1000, 9999)
 f = open( 'otp.txt', 'w' )
 f.write(str(otp))
-f.close()
 print(otp)
-account_sid = 'AC8264268afd653fe5cbd8cf019bd2f0ae' 
-auth_token = '58ad049c10b49597cf6cd2e08c011c37' 
+account_sid = 'ACcfdb2af6df861a91e8e2d2b5ed9105f2' 
+auth_token = '6cb9263aeb863e3674895dfae7392c4b' 
 client= Client(account_sid, auth_token) 
 message = client.messages.create( 
 body='Your OTP is-' + str(otp), 
-from_='+12512573562', 
+from_='+18646614447', 
 to = '+916303731463' 
 )
 

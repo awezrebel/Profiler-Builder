@@ -11,7 +11,7 @@ var c=0;
  
 var app = express();
 app.use(express.urlencoded());
-app.use(express.static('public'));  
+app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function(req,res) {
 var query = require('url').parse(req.url,true).query;
 var flag1=2;
@@ -66,43 +66,49 @@ var  cpass =query.cpass;
 var  mobile =query.mobile;
 
 //truncating temporary files
-
+ 
 if(c==0){
 fs.truncate('block.txt', 0, function() {
-console.log('File Content Deleted')
+console.log("File Content Deleted");
 });
 
 fs.truncate('out.txt', 0, function() {
-console.log('File Content Deleted')
+console.log("File Content Deleted");
 });
 c+=1;
 }
 
+//REMOVE COMMENTS WHILE RUNNING JTEST
+
+res.send("Jtest.html");
+ 
+
 
 //connection with database
 //aws rds
-
+/*
 var connection = mysql.createConnection({
 host: "database-1.cxg5ddbyrmb4.us-east-1.rds.amazonaws.com",
 user: "admin",
-password: "E7r9t8@Q#h%Hy+MProfile-Builder", // sensitive
-multipleStatements: true
+password: "12345678", // sensitive
+multipleStatements: true ,
 port: "3306",
 database: "database1"
 });
-
+*/
 
 //localhost
-/*
+ 
 var connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
         password: 'Awez@0987',
         port: '3306',
        database: 'database1',
+       multipleStatements: true 
 });
-*/
 
+ 
 if(uname!=null){
 res.sendfile("otp.html");
 var spawn = require("child_process").spawn; 
@@ -118,7 +124,7 @@ var process = spawn('python',["./otpv.py",] );
 }); 
 
 //login
-
+ 
 if(username != undefined && password != undefined) {
 fse.truncate('currentlogin.txt')
 fs.readFile('block.txt', 'utf-8', (err, data) => { 
@@ -145,7 +151,7 @@ if (err) throw err;
 }
 console.log(username);
 console.log(password);
-if(test==1){
+if(test==1){ 
 res.redirect("/data");
 }
 if(test==0){
@@ -200,6 +206,7 @@ var obj = {};
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
 app.get('/data', function(req, res){
+
 fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
 if (err) throw err; 
 connection.query(`SELECT name FROM login  WHERE (uname ='${data}')`, function(err, result) {
@@ -207,6 +214,7 @@ if(err){
 throw err;
 } else {
 obj = {print: result};
+
 res.render('print', obj);   
 console.log(obj);      
 }
@@ -227,6 +235,8 @@ forgotpass();
 res.send("please provide the correct otp");
 }
 });
+ 
+    
 
 
 
@@ -242,7 +252,7 @@ console.log(result);
 });
 //connection.end();
 res.send( `<p>Congratulations you have successfully reset your password` );
-
+ 
 }
 }
 
@@ -268,8 +278,10 @@ connection.query(`  select username,rollno, username, dob, mobile, cgpa, project
 }); 
     
 //edit details
-app.get('/edit', function(req, res) {
-res.sendfile("edit.html");
+app.engine('html', require('ejs').renderFile);
+ 
+app.get('/edit',function(req,res){
+res.render(__dirname+'/edit.html');
 });
 
 
@@ -291,7 +303,7 @@ success=1;
 }
 }
 if(success==1){
-console.log("i came to line 280");
+ 
 connection.query(` UPDATE database1.login SET pwd = '${cpass}' WHERE (uname = '${data}');`, function(err, result) {  
 res.sendfile("psuccess.html");  
 if(err) throw err;
@@ -487,8 +499,8 @@ if(Topic != null){
 
 //Achievements Updates
 app.get('/aadddel',function(req,res){
-        res.sendfile("aadddel.html");
-        })
+res.sendfile("aadddel.html");
+})
 
 if(AName != null){
                 fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
@@ -498,10 +510,12 @@ if(AName != null){
                                 console.log(result);
                                 });
                         });
-                        res.sendfile("usuccess.html");
+                        res.redirect("/success");
 }
 
-
+app.get('/success',function(req,res){
+res.sendfile("usuccess.html");
+})
 
 if(ADName != null){
   
@@ -518,7 +532,11 @@ app.get('/logout', function(req, res) {
 res.sendfile("logout.html");
 });
 
-}).listen(8000);
+})
+//app.listen(8000);
+
+module.exports.app = app;
+jest.setTimeout(50000);
 console.log("hi shaik iam listening to port 8000 ")
 
 

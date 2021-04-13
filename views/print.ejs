@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://bootswatch.com/cyborg/"/>
     <link rel="stylesheet" href="http://localhost:8080/css/search.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   
 <body>
 <style>
@@ -39,6 +40,7 @@ background-image: url('http://localhost:8080/images/background.png');
 
 .u-center-text {
   text-align: center !important;
+  
 }
 
 .u-margin-bottom-small {
@@ -414,8 +416,8 @@ body{
   font-size: 20px;
 }
  
-
-/*Resize the wrap to see the search bar change!*/
+ 
+ /* Resize the wrap to see search bar change */
 .wrap{
   width: 30%;
   position: absolute;
@@ -426,7 +428,7 @@ body{
 
 body{
     
-    background-image:url("  http://localhost:8080/images/background.png");
+    background-image:url("https://raw.githubusercontent.com/awezrebel/Profiler-Builder/main/8080/images/background.png");
            background-size: 1560px;
            
   }
@@ -502,7 +504,44 @@ font-size:15px;
 h1{
   text-align: center;
 }
+
+
+
+
+.loader {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  
+  
+    
+  
+}
+.loader:after {
+  
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid yellow;
+  border-color:red transparent yellow transparent;
+  animation: loader 1.2s linear infinite;
+  text-align: center;
+}
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+ 
 </style>
+
+
 <div class="timer">
  
     <a style="text-decoration:none;" href="https://www.zeitverschiebung.net/en/country/in"></a>
@@ -554,7 +593,8 @@ h1{
   </head>
   <body>
     
-    <div class="wrapper">
+
+<div class="wrapper">
       <div class="search-input">
         <a href="" target="_blank" hidden></a>
           <input type="text" placeholder="Type to search.." id="search">
@@ -577,8 +617,17 @@ h1{
      
       <div class="u-center-text u-margin-bottom-big">
         <h2 class="heading-secondary">
-         Teachers data
+             Teachers data
         </h2>
+          <center>
+
+   
+          <div class="loader">
+            <div></div>    
+
+            </div>
+          </center>
+      
       </div>
 
       <div class="row">
@@ -687,7 +736,14 @@ h1{
       <div class="u-center-text u-margin-top-huge">
        
       </div>
+ 
     </section>
+    <script>
+      $(window).on('load',function(){
+      $(".loader").fadeOut(1000);
+      
+      })
+    </script> 
   </body>
 </html>
 <button  class="logout" formaction="/warning" >Logout</button>
