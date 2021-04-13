@@ -532,8 +532,7 @@ app.get('/logout', function(req, res) {
 res.sendfile("logout.html");
 });
 
-})
-//app.listen(8000);
+}).listen(8000);
 
 module.exports.app = app;
 //jest.setTimeout(50000);
