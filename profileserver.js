@@ -86,19 +86,19 @@ res.send("Jtest.html");
 
 //connection with database
 //aws rds
-/*
+
 var connection = mysql.createConnection({
 host: "database-1.cxg5ddbyrmb4.us-east-1.rds.amazonaws.com",
 user: "admin",
-password: "12345678", // sensitive
+password: "E7r9t8@Q#h%Hy+MProfile-Builder", // sensitive
 multipleStatements: true ,
 port: "3306",
 database: "database1"
 });
-*/
+
 
 //localhost
- 
+ /*
 var connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
@@ -107,7 +107,7 @@ var connection = mysql.createConnection({
        database: 'database1',
        multipleStatements: true 
 });
-
+*/
  
 if(uname!=null){
 res.sendfile("otp.html");
