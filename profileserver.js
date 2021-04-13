@@ -1,7 +1,7 @@
 var http = require('http');
 const fs = require('fs'); 
 const fse = require('fs-extra');  
-var express=require('express');
+let express=require('express');
 var validator = require('validator');
 const path = require('path');
 const router = express.Router();
@@ -9,7 +9,7 @@ var mysql = require('mysql');
 var url = require('url');
 var c=0;
  
-var app = express();
+let app = express();
 app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function(req,res) {
@@ -63,7 +63,7 @@ var Location=query.Location;
 var  oldpass =query.oldpass;
 var  newpass =query.newpass;
 var  cpass =query.cpass;
-var  mobile =query.mobile;
+
 
 //truncating temporary files
  
@@ -80,14 +80,14 @@ c+=1;
 
 //REMOVE COMMENTS WHILE RUNNING JTEST
 
-res.send("Jtest.html");
+//res.send("Jtest.html");
  
 
 
-//connection with database
+//mycon with database
 //aws rds
 /*
-var connection = mysql.createConnection({
+var mycon = mysql.createmycon({
 host: "database-1.cxg5ddbyrmb4.us-east-1.rds.amazonaws.com",
 user: "admin",
 password: "12345678", // sensitive
@@ -99,12 +99,13 @@ database: "database1"
 
 //localhost
  
-var connection = mysql.createConnection({
+var mycon = mysql.createConnection({
         host: 'localhost',
         user: 'root',
         password: 'Awez@0987',
         port: '3306',
-       database: 'database1',
+        database: 'database1',
+    
        multipleStatements: true 
 });
 
@@ -136,7 +137,7 @@ res.send("Your account is blocked ..pls login after 24hrs");
 
 var test = 0;             
 pd=password;
-connection.query('SELECT * from login', function (error,login, fields) {
+mycon.query('SELECT * from login', function (error,login, fields) {
 if (error) throw error;
 
 var length = login.length;
@@ -158,7 +159,7 @@ if(test==0){
 wrongpass();
 }
 });
-//connection.end();
+//mycon.end();
 }})
 }
 
@@ -209,7 +210,7 @@ app.get('/data', function(req, res){
 
 fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
 if (err) throw err; 
-connection.query(`SELECT name FROM login  WHERE (uname ='${data}')`, function(err, result) {
+mycon.query(`SELECT name FROM login  WHERE (uname ='${data}')`, function(err, result) {
 if(err){
 throw err;
 } else {
@@ -241,16 +242,16 @@ res.send("please provide the correct otp");
 
 
 function forgotpass() {
-connection.connect(function (err) {
+mycon.connect(function (err) {
 if (err) throw err;
 console.log("Connected RDS");
 });
 const sql3=`UPDATE login SET pwd = '${pwd}' WHERE (uname ='${uname1}')`;
-connection.query(sql3, function (err, result) {
+mycon.query(sql3, function (err, result) {
 if (err) throw err;
 console.log(result);
 });
-//connection.end();
+//mycon.end();
 res.send( `<p>Congratulations you have successfully reset your password` );
  
 }
@@ -265,7 +266,7 @@ app.set('view engine', 'ejs');
 app.get('/profile', function(req, res) { 
 fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
 if (err) throw err;         
-connection.query(`  select username,rollno, username, dob, mobile, cgpa, projects, images, remarks, mother, father, parentmobile, address,mail from profile WHERE (rollno ='${data}')`, function(err, result) {
+mycon.query(`  select username,rollno, username, dob, mobile, cgpa, projects, images, remarks, mother, father, parentmobile, address,mail from profile WHERE (rollno ='${data}')`, function(err, result) {
         if(err){
         throw err;
         } else {
@@ -291,7 +292,7 @@ if(oldpass != null && newpass != null){
 if(newpass==cpass){
 
 if (err) throw err;   
-connection.query(`  select * from database1.login `, function(err, login1) {
+mycon.query(`  select * from database1.login `, function(err, login1) {
  
 if(err) throw err;
 
@@ -304,7 +305,7 @@ success=1;
 }
 if(success==1){
  
-connection.query(` UPDATE database1.login SET pwd = '${cpass}' WHERE (uname = '${data}');`, function(err, result) {  
+mycon.query(` UPDATE database1.login SET pwd = '${cpass}' WHERE (uname = '${data}');`, function(err, result) {  
 res.sendfile("psuccess.html");  
 if(err) throw err;
 
@@ -328,7 +329,7 @@ app.set('view engine', 'ejs');
 app.get('/workshops',function(req,res){
         fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
                 if (err) throw err;         
-                connection.query(`  select  certificateid , Organisation, duration, Objective, Tools, Outcome from workshops WHERE (rollno ='${data}')`, function(err, result) {
+                mycon.query(`  select  certificateid , Organisation, duration, Objective, Tools, Outcome from workshops WHERE (rollno ='${data}')`, function(err, result) {
                         if(err){
                         throw err;
                         } else {
@@ -347,7 +348,7 @@ app.set('view engine', 'ejs');
 app.get('/skills',function(req,res){
         fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
                 if (err) throw err;         
-                connection.query(`  select  rollno, languages, web, tools from skills WHERE (rollno ='${data}')`, function(err, result) {
+                mycon.query(`  select  rollno, languages, web, tools from skills WHERE (rollno ='${data}')`, function(err, result) {
                         if(err){
                         throw err;
                         } else {
@@ -369,7 +370,7 @@ app.set('view engine', 'ejs');
 app.get('/Achievements',function(req,res){
         fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
                 if (err) throw err;         
-                connection.query(`  select  Name, Details, Location from Achievements WHERE (rollno ='${data}')`, function(err, result) {
+                mycon.query(`  select  Name, Details, Location from Achievements WHERE (rollno ='${data}')`, function(err, result) {
                         if(err){
                         throw err;
                         } else {
@@ -390,7 +391,7 @@ app.set('view engine', 'ejs');
 app.get('/projects',function(req,res){
         fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
                 if (err) throw err;         
-                connection.query(`  select  Topic, Duration, Objective, Tools, Outcome from projects WHERE (rollno ='${data}')`, function(err, result) {
+                mycon.query(`  select  Topic, Duration, Objective, Tools, Outcome from projects WHERE (rollno ='${data}')`, function(err, result) {
                         if(err){
                         throw err;
                         } else {
@@ -418,7 +419,7 @@ res.sendfile("adddel.html");
 if(Organisation != null){
         fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
                 if (err) throw err;         
-                connection.query(` INSERT INTO database1.workshops (certificateid, rollno, Organisation, duration, Objective,Tools,Outcome) VALUES ('${id}','${data}', '${Organisation}','${duration}','${Objective}','${Tools}','${Outcome}')`, function(err, result) {
+                mycon.query(` INSERT INTO database1.workshops (certificateid, rollno, Organisation, duration, Objective,Tools,Outcome) VALUES ('${id}','${data}', '${Organisation}','${duration}','${Objective}','${Tools}','${Outcome}')`, function(err, result) {
                         if(err) throw err;
                         console.log(result);
                         });
@@ -428,7 +429,7 @@ if(Organisation != null){
 
 //removing 
 if(id !=null && Organisation ==null){
-        connection.query(` DELETE FROM database1.workshops WHERE (certificateid = '${id}');`, function(err, result) {
+        mycon.query(` DELETE FROM database1.workshops WHERE (certificateid = '${id}');`, function(err, result) {
                 if(err) throw err;
                 console.log(result);
                 });
@@ -443,7 +444,7 @@ res.sendfile("sadddel.html");
 if(languages  != null){
         fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
                 if (err) throw err;         
-                connection.query(` INSERT INTO database1.skills (rollno , languages , web , tools) VALUES ('${data}','${languages}','${web}', '${tools}')`, function(err, result) {
+                mycon.query(` INSERT INTO database1.skills (rollno , languages , web , tools) VALUES ('${data}','${languages}','${web}', '${tools}')`, function(err, result) {
                         if(err) throw err;
                         console.log(result);
                         });
@@ -457,7 +458,7 @@ app.get('/sdelete',function(req,res){
        
                 fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
                         if (err) throw err; 
-                connection.query(  `DELETE FROM database1.skills WHERE (rollno = '${data}')`,function(err,result){
+                mycon.query(  `DELETE FROM database1.skills WHERE (rollno = '${data}')`,function(err,result){
                 if(err) throw err;
                 console.log(result);
                 });
@@ -475,7 +476,7 @@ app.get('/padddel',function(req,res){
 if(POutcome != null){
         fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
                 if (err) throw err;         
-                connection.query(` INSERT INTO database1.projects (rollno, Topic, Duration, Objective, Tools, Outcome) VALUES ('${data}','${PTopic}','${PDuration}', '${PObjective}','${PTools}','${POutcome}')`, function(err, result) {
+                mycon.query(` INSERT INTO database1.projects (rollno, Topic, Duration, Objective, Tools, Outcome) VALUES ('${data}','${PTopic}','${PDuration}', '${PObjective}','${PTools}','${POutcome}')`, function(err, result) {
                         if(err) throw err;
                         console.log(result);
                         });
@@ -488,7 +489,7 @@ if(Topic != null){
       console.log("line no 411" + Topic)
         fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
         if (err) throw err; 
-        connection.query(  `DELETE FROM database1.projects WHERE (Topic = '${Topic}')`,function(err,result){
+        mycon.query(  `DELETE FROM database1.projects WHERE (Topic = '${Topic}')`,function(err,result){
         if(err) throw err;
         console.log(result);
         });
@@ -505,7 +506,7 @@ res.sendfile("aadddel.html");
 if(AName != null){
                 fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
                         if (err) throw err;         
-                        connection.query(` INSERT INTO database1.Achievements   (rollno, Name , Details , Location) VALUES ('${data}','${AName}','${Details}', '${Location}')`, function(err, result) {
+                        mycon.query(` INSERT INTO database1.Achievements   (rollno, Name , Details , Location) VALUES ('${data}','${AName}','${Details}', '${Location}')`, function(err, result) {
                                 if(err) throw err;
                                 console.log(result);
                                 });
@@ -519,7 +520,7 @@ res.sendfile("usuccess.html");
 
 if(ADName != null){
   
-        connection.query(  `DELETE FROM database1.Achievements WHERE (Name = '${ADName}')`,function(err,result){
+        mycon.query(  `DELETE FROM database1.Achievements WHERE (Name = '${ADName}')`,function(err,result){
         if(err) throw err;
         console.log(result);
         });
@@ -533,10 +534,10 @@ res.sendfile("logout.html");
 });
 
 })
-//app.listen(8000);
+app.listen(8000);
 
 module.exports.app = app;
-jest.setTimeout(50000);
+//jest.setTimeout(50000);
 console.log("hi shaik iam listening to port 8000 ")
 
 
