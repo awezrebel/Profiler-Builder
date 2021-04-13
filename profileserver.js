@@ -80,7 +80,7 @@ c+=1;
 
 //REMOVE COMMENTS WHILE RUNNING JTEST
 
-res.send("Jtest.html");
+//res.send("Jtest.html");
  
 
 
@@ -99,7 +99,7 @@ database: "database1"
 
 //localhost
  
-var mycon = mysql.createmycon({
+var mycon = mysql.createConnection({
         host: 'localhost',
         user: 'root',
         password: 'Awez@0987',
@@ -532,7 +532,8 @@ app.get('/logout', function(req, res) {
 res.sendfile("logout.html");
 });
 
-}).listen(8000);
+})
+app.listen(8000);
 
 module.exports.app = app;
 //jest.setTimeout(50000);
