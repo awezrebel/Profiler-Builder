@@ -80,7 +80,7 @@ c+=1;
 
 //REMOVE COMMENTS WHILE RUNNING JTEST
 
-res.send("Jtest.html");
+//res.send("Jtest.html");
  
 
 
