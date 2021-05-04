@@ -4,6 +4,8 @@
 <title>OTP</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
 <body>
   <style>
 
@@ -38,27 +40,34 @@ font-size:15px;
    <form method="GET" , action="http://localhost:8000/">     
 
  
- 
 
-  
-    <p>      
-      <label class="w3-text-black" ><strong>OTP:</strong></label>
-      <input class="w3-sand"  name="otp"  size="30" type="text" required></p>
-    <p>
-      <p>      
-        <label class="w3-text-black"  ><strong>User name:</strong></label>
-        <input class="w3-sand" name="uname1" size="25" type="text"></p>
-        <p>  
-    <p>      
-      <label class="w3-text-black"  ><strong>password:</strong></label>
-      <input size="25" class="w3-sand" name="pwd"   type="text"></p>
-    <p>
-    <p>      
-      <label class="w3-text-black"><strong>Confirm:</strong></label>
-      <input class="  w3-sand" name="cpwd"  size="25" type="text"></p>
-    <p>
-     
+
  
+    OTP:<input type="text" name="otp" ><br></br>  
+     User name:<input type="text" name="uname1" ><br></br>  
+    Password:<input type="password" name="pwd" id="pwd"> 
+     <i class="far fa-eye"  onclick="password()"></i><br></br>   
+    Confirm password:<input type="password" name="cpwd"  id="cpwd">   
+   <i class="far fa-eye"  onclick="confirmpassword()"></i><br></br>  
+<script>
+  function  password() {
+    var x = document.getElementById("pwd");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+
+  function   confirmpassword() {
+    var x = document.getElementById("cpwd");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+</script>
    
         <div id="countdown"></div>
         <button class="w3-button w3-orange"  id="mybutton" formaction="/otp"  >Resend OTP</button>  <br><br> 

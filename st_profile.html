@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Document</title>
+</head>
+<style>
+body {
+   
+  background-image:url("  http://localhost:8080/images/background.png");
+         background-size: 1560px;
+         text-align: center;   
+}
+
+.logout {
+position:absolute;
+top: 10px;
+right: 20px;
+font-size:15px;
+  border-radius: 3px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+ 
+ 
+  padding: 7px;
+  width: 70px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+.home {
+position:absolute;
+top: 10px;
+right: 100px;
+ 
+font-size:15px;
+  border-radius: 3px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+
+
+  padding: 7px;
+  width: 70px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+.button {
+position:absolute;
+ 
+font-size:15px;
+  border-radius: 3px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+
+
+  padding: 7px;
+  width: 70px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+ 
+ h1{
+   font-style: italic;
+   border-bottom: 10px;
+ }
+
+
+ .geturl {
+position:absolute;
+bottom: 10px;
+right: 670px;
+ 
+  border-radius: 2px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 13px;
+  padding: 7px;
+  width: 120px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+</style>
+
+<form method="GET", action="http://localhost:8000/">   
+  
+<body>
+ 
+ 
+<form class="w3-container">
+    <div class="w3-container w3-peach">
+        <h2>Student Personal Data</h2>
+      </div><br><br>
+                  
+       Rollno : <input type="text" name="ad_Rollno">  <br><br>
+       Username:<input type="text" name="ad_Username">  <br><br>
+       DOB <input type="date" name="ad_DOB">  <br><br>
+       Mobile <input type="text" name="ad_Mobile">  <br><br>
+       CGPA <input type="text" name="ad_CGPA">  <br><br>
+       Projects<input type="text" name="ad_Projects">  <br><br>
+      
+      
+
+      
+      Remarks<input type="text" name="ad_Remarks">  <br><br>
+       Mother <input type="text" name="ad_Mother">  <br><br>
+       Father <input type="text" name="ad_Father">  <br><br>
+       Parentmobile <input type="text" name="ad_Parentmobile">  <br><br>
+       Address <input type="text" name="ad_Address">  <br><br>
+       Mail <input type="email" name="ad_Mail">  <br><br>
+ 
+       <a href="http://localhost:8000/image?" class="geturl"  onclick="window.open(this.href,'targetWindow',
+       `toolbar=no,
+        location=center,
+        status=no,
+        menubar=no,
+        scrollbars=yes,
+        resizable=yes,
+        width=1000,
+        height=600`) ;
+return false;">Upload Image</a> <br><br> <br><br>
+
+
+ 
+<button class="button" formaction="/students"> Cancel</button>
+   &emsp;  &emsp;  &emsp;   &emsp;  &emsp;
+<button class="button" type="submit">confirm</button><br> <br>
+ 
+
+ 
+</form>     
+ 
+</body>
+</html>

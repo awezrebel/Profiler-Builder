@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,24 +9,21 @@
 
 <style>
 body{
-    background-color: black;
     text-align: center;
+    background-image:url(" https://w.wallhaven.cc/full/39/wallhaven-39mxkv.png");
+         background-size: 1560px;
+         text-align: center;
 }
-h1{
-    color: white;
-}
-.close {
-position:absolute;
-bottom: 100px;
-left: 725px;
- 
+
+.button {
 font-size:15px;
   border-radius: 3px;
   background-color: #f4511e;
   border: none;
   color: #FFFFFF;
   text-align: center;
- 
+  
+  
   padding: 7px;
   width: 70px;
   transition: all 0.5s;
@@ -35,16 +31,14 @@ font-size:15px;
   margin: 5px;
 }
 </style>
+<form method="GET", action="http://localhost:8000/">   
 <body>
+
     <h1>
-        JTESTING IS GOING ON 
+        Admin Login 
     </h1>
-
-    <img src ="https://wpamelia.com/wp-content/uploads/2018/11/ezgif-2-5468d589f84e.gif" alt="image not available"> 
-
-
-     
-<button type="button" class="close" onclick=window.close();>Close</button>
+ User name : <input type="text"  name="admin_uname" > <br><br>
+ Password : <input type="password" name="admin_password"> <br> <br>
+<button type="submit" class="button" name="submit" id="submit">Submit</button>
 </body>
 </html>
- 

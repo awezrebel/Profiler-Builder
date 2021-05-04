@@ -428,7 +428,7 @@ body{
 
 body{
     
-    background-image:url("https://raw.githubusercontent.com/awezrebel/Profiler-Builder/main/8080/images/background.png");
+    background-image:url("  http://localhost:8080/images/background.png");
            background-size: 1560px;
            
   }
@@ -566,13 +566,7 @@ h1{
 </tr>  
 </thead>  
 <tbody>  
-<% print.forEach(function (login) { %>
-<tr>  
-<h5
-<td><%= "Hello    "+login.name%></td>  
-</h5>
-</tr>                                   
-<% }) %>
+  
 </tbody>
 </table>   
 </body>
@@ -629,104 +623,48 @@ h1{
           </center>
       
       </div>
-
+      
+      <% print.forEach(function (teachers) { %>
       <div class="row">
         <div class="col-1-of-3">
           <div class="card">
-            <div class="card__side card__side--front-1">
-              <div class="card__title card__title--1">
-            <img src="https://www.cse.iitb.ac.in/images/faculty/varsha.jpg" width="150">
+
+          <div class="<%= teachers.frontflip  %> ">
+
+           <div class="card__title card__title--1">
+            <img src=" <%= teachers.image%> " width="150"></img>
               </div>
 
               <div class="card__details">
                 <ul>
-                  
-                  <li>Varsha Apte</li>
-                  <li>Research Interests:
-                  Performance Evaluation of Computer Systems and Networks</li>
-                  <li>Email, Phone Extension:
-                    varsha
-                    cse iitb ac in , 7731</li>
-                  <li>Office:
-                  Room no. SIA-408, Kanwal Rekhi Building</li>
                  
+                  <li><td><%= teachers.name%></td>  </li>
+                  <li><td><%= teachers.qualification%></td>  </li>
+                  <li><td><%= teachers.designation%></td>  </li>
+                  <li><td><%= teachers.university%></td>  </li>
+                  <li><td><%= teachers.expert%></td>  </li>
+                  <li><td><%= teachers.projects%></td>  </li>
+               
                 </ul>
               </div>
             </div>
-            <div class="card__side card__side--back card__side--back-1">
+            <div class="<%= teachers.backflip %> ">
               <div class="card__cta">
                 <div class="card__price-box">
                  
                 </div>
               
-                <a href="https://scholar.google.co.in/citations?user=g2oLiH4AAAAJ&hl=en" class="btn btn--white">Google Scholar</a>
+                <a href="<%= teachers.googleschloar %> " class="btn btn--white">Google Scholar</a>
                 <br></br>
-                <a href=" https://dblp.org/pid/99/5513.html" class="btn btn--white">Dblp</a>
+                <a href=" <%= teachers.dblp  %> " class="btn btn--white">Dblp</a>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="col-1-of-3">
-          <div class="card">
-            <div class="card__side card__side--front-2">
-              <div class="card__title card__title--2">
-                <img src="https://www.cse.iitb.ac.in/images/faculty/rkj.jpg" width="150">
-              </div>
-
-              <div class="card__details">
-                <ul>
-                  <li>Rushikesh K. Joshi</li>
-                  <li>Research Interests:
-                    Object Oriented Systems, Distributed Systems, Software Architectures</li>
-                  <li>Email, Phone Extension:
-                  rkj  cse  iitb  ac  in , 7730</li>
-                  <li>Office:
-                    Room no. SIA-110, Kanwal Rekhi Building</li>
-                </ul>
-              </div>
-            </div>
-            <div class="card__side card__side--back card__side--back-2">
-              <div class="card__cta">
-                <div class="card__price-box">
-                  </div>   
-                <a href="https://scholar.google.co.in/citations?user=zmDfshUAAAAJ&hl=en" class="btn btn--white">Google Scholar</a>
-                <br></br>
-                <a href="https://dblp.uni-trier.de/pers/hd/j/Joshi:Rushikesh_K=" class="btn btn--white">Dblp</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-1-of-3">
-          <div class="card">
-            <div class="card__side card__side--front-3">
-              <div class="card__title card__title--3">
-              <img src="https://www.cse.iitb.ac.in/images/faculty/mp.jpg" width="150">
-              </div>
-
-              <div class="card__details">
-                <ul>
-                  <li>Manoj Prabhakaran</li>
-                  <li>Research Interests:
-                    Cryptography, Theoretical Computer Science  </li>
-                  <li>Email, Phone Extension:
-                  mp  cse  iitb  ac  in , 7709</li>
-                  <li>Office:
-                  Room no. 214, 2nd floor, New CSE/CC Building</li>
-                </ul>
-              </div>
-            </div>
-            <div class="card__side card__side--back card__side--back-3">
-              <div class="card__cta">
-                <div class="card__price-box">
-                  
-                </div>
-            
-              <a href="https://scholar.google.com/citations?user=FANRIhwAAAAJ&hl=en" class="btn btn--white">Google Scholar</a>
-              <br></br>
-              <a href="https://dblp.org/pers/hd/p/Prabhakaran:Manoj" class="btn btn--white">Dblp</a>
-            </div> 
+          
+        <% }) %>
+       
+         
               </div>
             </div>
           </div>

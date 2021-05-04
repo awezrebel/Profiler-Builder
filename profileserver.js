@@ -7,6 +7,9 @@ const path = require('path');
 const router = express.Router();
 var mysql = require('mysql');
 var url = require('url');
+ multer = require('multer');
+const upload = multer({storage:multer.memoryStorage()});
+ 
 var c=0;
  
 let app = express();
@@ -65,9 +68,40 @@ var  newpass =query.newpass;
 var  cpass =query.cpass;
 
 
+
+//admin 
+
+var ad_uname=query.admin_uname;
+var ad_pass=query.admin_password;
+
+var create_roll=query.create_roll;
+var create_pwd=query.create_pwd;
+var create_name=query.create_name;
+
+
+
+//admin adding student profile
+var ad_Rollno  = query.ad_Rollno;
+var  ad_Username = query.ad_Username;
+var  ad_DOB = query.ad_DOB;
+var  ad_Mobile= query.ad_Mobile;
+var  ad_CGPA = query.ad_CGPA;
+var  ad_Projects = query.ad_Projects;
+var  ad_Images = query.ad_Images;
+var  ad_Remarks = query.ad_Remarks;
+var  ad_Mother = query.ad_Mother;
+var  ad_Father = query.ad_Father;
+var   ad_Parentmobile= query.ad_Parentmobile;
+var   ad_Address= query.ad_Address;
+var   ad_Mail= query.ad_Mail;
+
+//deleting profile 
+var del_roll=query.del_roll;
+
 //truncating temporary files
  
 if(c==0){
+
 fs.truncate('block.txt', 0, function() {
 console.log("File Content Deleted");
 });
@@ -75,38 +109,32 @@ console.log("File Content Deleted");
 fs.truncate('out.txt', 0, function() {
 console.log("File Content Deleted");
 });
+
+
 c+=1;
 }
 
 //REMOVE COMMENTS WHILE RUNNING JTEST
 
-//res.send("Jtest.html");
+//res.sendfile("Jtest.html");
  
 
 
 //mycon with database
 //aws rds
-<<<<<<< HEAD
-/*
-=======
-
->>>>>>> 82107575bb5d6a80aa8ad4a66dfa568643fad366
+/* 
 var mycon = mysql.createmycon({
 host: "database-1.cxg5ddbyrmb4.us-east-1.rds.amazonaws.com",
 user: "admin",
-password: "E7r9t8@Q#h%Hy+MProfile-Builder", // sensitive
+password: "12345678", // sensitive
 multipleStatements: true ,
 port: "3306",
 database: "database1"
 });
-
+*/
 
 //localhost
-<<<<<<< HEAD
  
-=======
- /*
->>>>>>> 82107575bb5d6a80aa8ad4a66dfa568643fad366
 var mycon = mysql.createConnection({
         host: 'localhost',
         user: 'root',
@@ -116,7 +144,7 @@ var mycon = mysql.createConnection({
     
        multipleStatements: true 
 });
-*/
+
  
 if(uname!=null){
 res.sendfile("otp.html");
@@ -149,21 +177,35 @@ mycon.query('SELECT * from login', function (error,login, fields) {
 if (error) throw error;
 
 var length = login.length;
-
+var m=null;
 for(var i = 0; i < length; i++){
-if (login[i].uname==username && login[i].pwd==password){
+if (login[i].uname==username){
+m=i;
+}
+}
+if(m==null){
+res.sendfile("oops.html");
+}else{ 
+        
+if(login[m].pwd==password){
 test=1
-fs.appendFile('currentlogin.txt', username, (err) => { 
-if (err) throw err; 
+
+fs.appendFile('currentlogin.txt', username , (err) => { 
+if (err) throw err;
+const sql5=`INSERT INTO database1.currentlogin (user) VALUES ('${username}')`;
+mycon.query(sql5, function (err, result) {
+if (err) throw err;
+console.log(result);
+});
 }) 
-}
-}
+}}
+
 console.log(username);
 console.log(password);
 if(test==1){ 
-res.redirect("/data");
+res.redirect("/welcome");
 }
-if(test==0){
+if(test==0 && m!=null){
 wrongpass();
 }
 });
@@ -210,7 +252,45 @@ console.log("user " + username + "blocked");
 count=0;
 }
 
+
+
+if(ad_uname != undefined && ad_pass != undefined){
+if(ad_uname=="admin" && ad_pass =="1234"){
+res.sendfile("welcome_admin.html");
+}
+}
+
+app.get('/welcome_admin',function(req,res){
+res.sendfile("welcome_admin.html");
+})
+
+ 
+        
 var obj = {};
+ 
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine', 'ejs');
+app.get('/welcome', function(req, res){
+
+fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
+if (err) throw err; 
+mycon.query(`SELECT name FROM login  WHERE (uname ='${data}')`, function(err, result) {
+        
+if(err){
+throw err;
+} else {
+obj = {welcome: result};
+
+res.render('welcome', obj);   
+console.log(obj);      
+}
+});
+});      
+});
+
+
+//teachers data
+var obj6 = {};
  
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
@@ -218,7 +298,10 @@ app.get('/data', function(req, res){
 
 fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
 if (err) throw err; 
-mycon.query(`SELECT name FROM login  WHERE (uname ='${data}')`, function(err, result) {
+mycon.query(` select name , image , qualification , designation , university, projects, recognisations  , dblp , googleschloar , expert.subject   , frontflip , backflip  
+from teachers , expert   , flipcard  
+where (teachers.id = expert.id   && teachers.flipid = flipcard.flipid)  `, function(err, result) {
+        
 if(err){
 throw err;
 } else {
@@ -227,9 +310,14 @@ obj = {print: result};
 res.render('print', obj);   
 console.log(obj);      
 }
+
+
+ 
+
 });
 });      
 });
+
 
 
 
@@ -260,7 +348,7 @@ if (err) throw err;
 console.log(result);
 });
 //mycon.end();
-res.send( `<p>Congratulations you have successfully reset your password` );
+res.sendfile("usuccess.html");
  
 }
 }
@@ -285,7 +373,130 @@ mycon.query(`  select username,rollno, username, dob, mobile, cgpa, projects, im
         });
 });
 }); 
+
+
+
+//ADMIN getting Student details
+var obj1 = {};
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine', 'ejs');
+app.get('/students', function(req, res) { 
+fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
+if (err) throw err;         
+mycon.query(`  SELECT * FROM database1.profile; `, function(err, result) {
+        if(err){
+        throw err;
+        } else {
+        obj1 = {students: result};
+        res.render('students', obj1);   
+        console.log(obj1);      
+        }
+        });
+});
+}); 
+
+
+
+//admin getting login details 
+var obj8 = {};
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine', 'ejs');
+app.get('/st_login', function(req, res) { 
     
+mycon.query(` SELECT * FROM database1.login `, function(err, result) {
+if(err){
+throw err;
+} else {
+obj8 = {student_login: result};
+res.render('student_login', obj8);   
+console.log(obj8); 
+}
+});
+ 
+}); 
+
+app.get('/st_add', function(req,res){
+res.sendfile("st_add.html");
+
+});
+
+app.get('/st_del', function(req,res){
+res.sendfile("st_del.html");       
+});
+
+
+//admin enrolling student 
+if(create_name != undefined && create_pwd !=undefined && create_roll != undefined){
+ 
+mycon.query(` INSERT INTO database1.login (uname, pwd, name) VALUES ('${create_roll}', '${create_pwd}', '${create_name}');`, function(err, result) {
+if(err){
+throw err;
+} else {
+obj8 = {student_login: result};
+res.render('student_login', obj8);   
+console.log(obj8); 
+}
+ 
+});
+
+res.sendfile("success.html");
+}    
+
+//admin removing student
+
+if(create_roll != undefined && create_name == undefined && create_pwd == undefined){
+        mycon.query(` DELETE FROM database1.login WHERE (uname = '${create_roll}')`, function(err, result) {
+                if(err){
+                throw err;
+                } else {
+                obj8 = {student_login: result};
+                res.render('student_login', obj8);   
+                console.log(obj8); 
+                }
+                 
+                });
+                
+                res.sendfile("success.html");
+}
+
+app.get('/st_profile',function(req,res){
+res.sendfile("st_profile.html");
+});
+
+app.get('/st_profile_del',function(req,res){
+res.sendfile("st_profile_del.html");
+})
+
+//admin updating student primary details
+
+if(ad_Rollno != undefined && ad_Username!= undefined){
+fs.readFile('img_64.txt', 'utf-8', (err, data) => { 
+                if (err) throw err;
+           
+ 
+
+mycon.query(` INSERT INTO database1.profile (rollno, username, dob, mobile, cgpa, projects, images, remarks, mother, father, parentmobile, address, mail) VALUES ('${ad_Rollno}', '${ad_Username}', '${ad_DOB}', '${ad_Mobile}', '${ad_CGPA}', '${ad_Projects}', '${data}', '${ad_Remarks}', '${ad_Mother}', '${ad_Father}', '${ad_Parentmobile}', '${ad_Address}', '${ad_Mail}');`, function(err, result) {
+        if(err){
+        throw err;
+        }
+        });
+        
+})
+        res.sendfile("success.html");  
+
+}
+   
+//admin removing student profile 
+
+if(del_roll != undefined){
+  mycon.query(` DELETE FROM database1.profile WHERE (rollno = '${del_roll}')`, function(err, result) {
+   if(err) throw err;
+     });
+  res.sendfile("success.html");
+
+}
+
+
 //edit details
 app.engine('html', require('ejs').renderFile);
  
@@ -293,6 +504,18 @@ app.get('/edit',function(req,res){
 res.render(__dirname+'/edit.html');
 });
 
+
+
+//student create
+app.get('/st_create',function(req,res){
+res.sendfile("student_create.html");
+})
+
+//student delete
+app.get('/st_create',function(req,res){
+res.sendfile("student_create.html");
+})
+        
 
 if(oldpass != null && newpass != null){
         fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
@@ -539,13 +762,80 @@ if(ADName != null){
 //logout
 app.get('/logout', function(req, res) {
 res.sendfile("logout.html");
+fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
+if (err) throw err; 
+mycon.query(  `truncate table database1.currentlogin `,function(err,result){
+        if(err) throw err;
+        console.log(result);
+        });
+fs.truncate('currentlogin.txt', 0, function() {
+console.log("File Content Deleted");
+});
+});
+});
+
+ 
+ 
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine', 'ejs');
+app.get('/image',function(req,res){
+res.render('image');
+})
+
+
+
+app.get('/imageupload', upload.single('image') ,(req,res)=>{
+        
+
+
+
+})
+var image=query.img;
+if(image != undefined){
+console.log("Image received :" + image);
+
+
+function base64_encode(file) {
+        // read binary data
+        var bitmap = fs.readFileSync(file);
+        // convert binary data to base64 encoded string
+        return new Buffer(bitmap).toString('base64');
+    }
+
+    
+
+var base64str = base64_encode(image);
+fs.writeFile('img_64.txt', base64str , (err) => { 
+if (err) throw err;
+})
+ 
+res.sendfile("success.html")
+}
+ 
+
+
+app.get('/currentlogin',function(req,res){
+fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
+var datac=data.split(",");
+
+if (err) throw err;         
+mycon.query(`  select username,rollno, mobile, cgpa, images, mail from profile WHERE (rollno ='${data}')`, function(err, result) {
+if(err){
+throw err;
+} else {
+obj1 = {activelogins: result};
+res.render('activelogins', obj1);   
+console.log(obj1);      
+}
+});
+})
 });
 
 })
 app.listen(8000);
 
 module.exports.app = app;
-//jest.setTimeout(50000);
+//jest.setTimeout(5000);
 console.log("hi shaik iam listening to port 8000 ")
 
 

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<body>
+<style>
+ 
+
+
+.home {
+position:absolute;
+top: 10px;
+right: 120px;
+font-size: 100px;
+}
+
+.info {
+position:absolute;
+top: 10px;
+right: 85px;
+font-size: 100px;
+}
+.logout {
+position:absolute;
+top: 10px;
+right: 20px;
+font-size:15px;
+  border-radius: 3px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 15px;
+  padding: 7px;
+  width: 70px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+ 
+
+ 
+body {
+   text-align: center;
+    color: black;
+    background-color: black;
+         
+}
+.edit {
+position:absolute;
+top: 10px;
+right: 100px;
+ 
+font-size:15px;
+  border-radius: 3px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 15px;
+  padding: 7px;
+  width: 70px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+.home {
+position:absolute;
+top: 10px;
+right: 190px;
+ 
+font-size:15px;
+  border-radius: 3px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 15px;
+  padding: 7px;
+  width: 70px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+  
+div.polaroid {
+  
+  width: 9%;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 20px;
+}
+
+div.container {
+  text-align: center;
+  padding: 10px 20px;
+} 
+ 
+  
+.closebutton {
+position:absolute;
+bottom: 100px;
+left: 450px;
+ 
+font-size:15px;
+  border-radius: 3px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 15px;
+  padding: 7px;
+  width: 70px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+  
+.proceed {
+position:absolute;
+bottom: 100px;
+left: 740px;
+ 
+font-size:15px;
+  border-radius: 3px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 15px;
+  padding: 7px;
+  width: 70px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+h2{
+    font-style:inherit;
+  text-align: center;
+  color: white;
+}
+
+
+body{
+    text-align: center;
+}
+h1{
+    color: white;
+    text-align: left;
+    font-size: medium;
+    font-style: italic;
+}
+
+.logout {
+position:absolute;
+top: 10px;
+right: 20px;
+font-size:15px;
+  border-radius: 3px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 15px;
+  padding: 7px;
+  width: 70px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+</style>
+ 
+<table id="table" >  
+<thread>  
+<tr>    
+<form method="GET", action="http://localhost:8000/">     
+</tr>  
+
+ 
+
+    
+  
+ 
+ 
+</thead>  
+<tbody>
+ 
+        
+        <% welcome.forEach(function (login) { %> 
+       <tr> 
+           <h1
+           <td> <%= "welcome  "  + login.name%>     
+            <% }) %>
+        </tr></h1> 
+       <h2> Please Give us a moment while  we are getting ready everthing for you</h2>
+        <img id="loader" src="https://i.pinimg.com/originals/a7/b0/15/a7b015d343ad801ad6da8c242dc6ae06.gif"  ></img>       
+        <script>
+            $(document).ready(function(){
+            
+             $("#proceed").fadeOut();
+             $("#completed").fadeOut();
+              $("#loader").fadeOut(5000);
+              $("#proceed").fadeIn(5000);
+              $("#completed").fadeIn(20000);
+             
+            });
+            </script>
+                
+      <img id="completed"  fadeout src=" https://media.tenor.com/images/643ba0a4721675c539540138897c143a/tenor.gif"></img>  
+ 
+
+  
+</tbody>
+</table>
+
+ 
+      
+<button class="logout" formaction="/warning">Logout</button>
+<button class="proceed" id="proceed" formaction="/data">Proceed</button>
+
+ 
+ 
+</body>
+
+ 
+</html>
