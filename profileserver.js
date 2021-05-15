@@ -8,7 +8,7 @@ const router = express.Router();
 var mysql = require('mysql');
 var url = require('url');
 const { SyncStreamContext } = require('twilio/lib/rest/sync/v1/service/syncStream');
- multer = require('multer');
+let multer = require('multer');
 const upload = multer({storage:multer.memoryStorage()});
  
 var c=0;
@@ -18,21 +18,14 @@ app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function(req,res) {
 var query = require('url').parse(req.url,true).query;
-var flag1=2;
-var flag2=0;
-var j=0,z=0;
-let wp,block=null;
-var name=null;
+ 
 var username=query.username;
 var uname=query.uname;
 var uname1=query.uname1;
 var password=query.password;
 var pwd=query.pwd;
 var otp=query.otp;
-var projects =query.projects;
-var mobile =query.mobile ;
-var epass =query.epass ;
-var ecpass=query.ecpass;
+ 
 
 //workshop update
 var id=query.id;
@@ -88,7 +81,7 @@ var  ad_DOB = query.ad_DOB;
 var  ad_Mobile= query.ad_Mobile;
 var  ad_CGPA = query.ad_CGPA;
 var  ad_Projects = query.ad_Projects;
-var  ad_Images = query.ad_Images;
+ 
 var  ad_Remarks = query.ad_Remarks;
 var  ad_Mother = query.ad_Mother;
 var  ad_Father = query.ad_Father;
@@ -179,15 +172,16 @@ if(uname!=null){
 res.sendfile("otp.html");
 var spawn = require("child_process").spawn; 
 var process = spawn('python',["./otpv.py",] ); 
-
+console.log("Generating Otp " + process);
 };
 
 
-app.get('/otp', function(req, res) {
-res.sendfile("otp.html");
-var spawn = require("child_process").spawn; 
-var process = spawn('python',["./otpv.py",] ); 
-}); 
+app.get('/otp', function(req1, res1) {
+res1.sendfile("otp.html");
+  spawn = require("child_process").spawn; 
+  process = spawn('python',["./otpv.py",] ); 
+console.log("Generating Otp " + process);
+})
 
 //login
  
@@ -201,7 +195,7 @@ res.send("Your account is blocked ..pls login after 24hrs");
 }else{
 
 var test = 0;             
-pd=password;
+var pd=password;
 mycon.query('SELECT * from login', function (error,login, fields) {
 if (error) throw error;
 
@@ -222,8 +216,8 @@ test=1
 fs.appendFile('currentlogin.txt', username , (err) => { 
 if (err) throw err;
 const sql5=`INSERT INTO database1.currentlogin (user) VALUES ('${username}')`;
-mycon.query(sql5, function (err, result) {
-if (err) throw err;
+mycon.query(sql5, function (err1, result) {
+if (err1) throw err1;
 console.log(result);
 });
 }) 
@@ -234,14 +228,14 @@ console.log(password);
 if(test==1){ 
 res.redirect("/welcome");
 
-fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
+fs.readFile('currentlogin.txt', 'utf-8', (err, data1) => { 
         if (err) throw err;
         var date = new Date();
         var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         console.log(" Date   " + date + " Time : " + time);
         const sql5=`INSERT INTO database1.loginhistory (user, date, time ) VALUES ('${username}' , '${date}' , '${time}')`;
-        mycon.query(sql5, function (err, result) {
-        if (err) throw err;
+        mycon.query(sql5, function (err2, result) {
+        if (err2) throw err2;
         console.log(result);
         });
          
@@ -255,14 +249,14 @@ if(test==0 && m!=null){
 wrongpass();
 }
 });
-//mycon.end();
+ 
 }})
 }
 
 
 
 function wrongpass(){
-var count=0;
+  count=0;
 let data = username+",";
 fs.appendFile('Out.txt', data, (err) => { 
 if (err) throw err; 
@@ -295,7 +289,7 @@ if (err) throw err;
 console.log("user " + username + "blocked");
 }
     
-count=0;
+ 
 }
  
  
@@ -311,8 +305,8 @@ res.sendfile("welcome_admin.html");
 }
 }
 
-app.get('/welcome_admin',function(req,res){
-res.sendfile("welcome_admin.html");
+app.get('/welcome_admin',function(req1,res1){
+res1.sendfile("welcome_admin.html");
 })
 
  
@@ -321,7 +315,7 @@ var obj = {};
  
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
-app.get('/welcome', function(req, res){
+app.get('/welcome', function(req2, res2){
 
 fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
 if (err) throw err; 
@@ -332,8 +326,8 @@ throw err;
 } else {
 obj = {welcome: result};
 
-res.render('welcome', obj);   
-//console.log(obj);      
+res2.render('welcome', obj);   
+    
 }
 });
 });      
@@ -388,7 +382,7 @@ res.render('filter', obj7);
 });     
  
 
-obj7.truncate;
+//obj7.truncate();
 //console.log("obj 7 ->     " + obj7);
 search=null;
 }
@@ -669,8 +663,9 @@ if(success==1){
  
 mycon.query(` UPDATE database1.login SET pwd = '${cpass}' WHERE (uname = '${data}');`, function(err, result) {  
 res.sendfile("psuccess.html"); 
-var spawn = require("child_process").spawn; 
-var process = spawn('python',["./passnotif.py",] );  
+  spawn = require("child_process").spawn; 
+  process = spawn('python',["./passnotif.py",] );  
+console.log("Notification sent to mobile - > " + process);
 if(err) throw err;
 
 //console.log(result);

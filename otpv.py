@@ -6,7 +6,7 @@ f = open( 'otp.txt', 'w' )
 f.write(str(otp))
 print(otp)
 account_sid = 'ACcfdb2af6df861a91e8e2d2b5ed9105f2' 
-auth_token = 'f6070456ff3b7471c7488d10da607732' 
+auth_token = 'f6df49c5f8da5b8027d903906402a986' 
 client= Client(account_sid, auth_token) 
 message = client.messages.create( 
 body='Your OTP is-' + str(otp), 
