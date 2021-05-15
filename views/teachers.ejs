@@ -228,6 +228,7 @@ font-size:15px;
   display: inline-block;
   width: 80px;
   height: 80px;
+  text-align: center;
 }
 .loader:after {
   
@@ -249,106 +250,11 @@ font-size:15px;
   100% {
     transform: rotate(360deg);
   }
+  
 }
  
 
-.button0{
-background: transparent;
-}
 
-
-.button1{
-background: transparent;
-position:absolute;
-top: 85px;
-left: 150px;
-
-}
-
-.button2{
-background: transparent;
-position:absolute;
-top: 85px;
-left: 250px;
-
-}
-
-.button3{
-background: transparent;
-position:absolute;
-top: 85px;
-left: 350px;
-
-}
-
-
-
-.button4{
-background: transparent;
-position:absolute;
-top: 85px;
-left: 410px;
-
-}
-
-
-.button4{
-background: transparent;
-position:absolute;
-top: 85px;
-left: 425px;
-
-}
-
-.button5{
-background: transparent;
-position:absolute;
-top: 85px;
-left: 490px;
-
-}
-
-
-.button6{
-background: transparent;
-position:absolute;
-top: 85px;
-left: 580px;
-
-}
-
-.button7{
-background: transparent;
-position:absolute;
-top: 85px;
-left: 680px;
-
-}
-
-.button8{
-background: transparent;
-position:absolute;
-top: 85px;
-left: 850px;
-
-}
-
-.button9{
-background: transparent;
-position:absolute;
-top: 85px;
-right: 250px;
-
-}
-
-
-.button10{
-background: transparent;
-position:absolute;
-top: 85px;
-right: 90px;
-
-}
 </style>
  
 <table id="table" >  
@@ -360,16 +266,16 @@ right: 90px;
  
 
     
-  <h2>Students Data </h2>   
+  <h2>Teachers  Data </h2>   
   <center>
 
  
-    <div class="loader">
-      <div></div>    
-    
-      </div>
-    </center>
- 
+  <div class="loader">
+    <div></div>    
+  
+    </div>
+  </center>
+  
 </thead>  
 <tbody>
     <div class="container">
@@ -377,21 +283,33 @@ right: 90px;
         <table class="table table-striped">
           <thead>
             <tr>
-  
-             <button class="button0" formaction="/students">Roll no</button>  
+              <th>    Name         </th>
+              <th>                  </th>
+              <th>                </th>
+              <th>                 </th> 
+              <th>     Qualification          </th> 
+              <th>              </th>
+              <th>      Designation           </th> 
         
-             <button class="button1"  formaction="/students">Name</button>
-             <button class="button2"  formaction="/students">DOB</button>
-          
-
-          <button class="button3"  formaction="/students">Mobile</button>
-             <button class="button4"  formaction="/students">CGPA</button>
-             <button class="button5"  formaction="/students">Mother</button>
-             <button class="button6"  formaction="/students">Father</button>
-             <button class="button7"  formaction="/students">Parent Mobile</button>
-             <button class="button8"  formaction="/students">Address</button> 
-             <button class="button9"  formaction="/students">G-Mail ID</button>   
-             <button class="button10"  formaction="/students">Photo</button>    
+              <th>      University    </th> 
+              <th>              </th>
+              <th>              </th>
+              <th>     Projects     </th>
+              <th>              </th>
+              <th>              </th>
+              <th>              </th>
+              <th>              </th>
+              <th>              </th>
+               <th>              </th>
+              <th>   Recognisations  </th>
+              <th>              </th>
+              <th>               </th>
+              <th>               </th>     
+              <th>               </th>
+              <th>               </th>  
+              <th>               </th> 
+              <th>               </th> 
+              <th>     Image         </th>
             </tr>
             </thead>
     
@@ -399,23 +317,20 @@ right: 90px;
 
             <div class="container"> 
         <table class="table table-striped">
-        <% students.forEach(function (students) { %>  
+        <% teachers.forEach(function (teachers) { %>  
        <tr> 
-       
-        <td><%=  students.rollno%>     </td> 
-        <td> <%= students.username%>      </td>
-        <td> <%= students.dob %>   </td> 
-        <td> <%= students.mobile %>   </td> 
-        <td> <%= students.cgpa%>   </td> 
-       
-       
-        <td> <%= students.mother %>   </td> 
-        <td> <%= students.father %>   </td> 
-        <td> <%= students.parentmobile %>   </td> 
-        <td> <%= students.address %>   </td> 
-        <td> <%= students.mail %>   </td> 
-           
-        <td>  <img src="data:image/jpg;base64,<%=students.images%>" width="150" alt="image not available"></img> </td> 
+        
+        <td><%=  teachers.name%>     </td> 
+        <td> <%= teachers.qualification%>      </td>
+        <td> <%= teachers.designation %>   </td> 
+        <td> <%= teachers.university %>   </td> 
+  
+        <td> <%= teachers.projects %>   </td> 
+        <td> <%= teachers.recognisations %>   </td> 
+        <td> <a  href=" <%= teachers.dblp %>  "  > DBLP</a>    </td>  
+        <td> <a  href=" <%= teachers.googleschloar %>  "  >  Google Schloar</a>    </td>  
+
+        <td>  <img src="<%= teachers.image%> " width="150" alt="image not available"></img> </td> 
       </tr> 
                 
         <% }) %>
@@ -425,13 +340,13 @@ right: 90px;
 </tbody>
 </table>
 
+
  
- 
-<button class="add" formaction="/st_login">ADD</button>    
-<button class="Remove" formaction="/st_profile_del">Remove</button>    
+<button class="add" formaction="/fac_add">ADD</button>    
+<button class="Remove" formaction="/fac_del">Remove</button>    
 
 <button class="wel_admin" formaction="/welcome_admin">Home</button>  
-<button class="refresh" formaction="/students">Refresh</button>  
+<button class="refresh" formaction="/teachers">Refresh</button>  
 <button  class="logout" formaction="/warning" >Logout</button>
 
 <script>

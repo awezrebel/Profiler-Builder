@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <title>Document</title>
 </head>
 <style>
@@ -13,8 +12,7 @@ body {
    
   background-image:url("  http://localhost:8080/images/background.png");
          background-size: 1560px;
-         text-align: center;
-         
+         text-align: center;   
 }
 
 .logout {
@@ -27,6 +25,7 @@ font-size:15px;
   border: none;
   color: #FFFFFF;
   text-align: center;
+ 
  
   padding: 7px;
   width: 70px;
@@ -45,7 +44,8 @@ font-size:15px;
   border: none;
   color: #FFFFFF;
   text-align: center;
- 
+
+
   padding: 7px;
   width: 70px;
   transition: all 0.5s;
@@ -70,6 +70,29 @@ font-size:15px;
   margin: 5px;
 }
  
+ h1{
+   font-style: italic;
+   border-bottom: 10px;
+ }
+
+
+ .geturl {
+position:absolute;
+bottom: 10px;
+right: 670px;
+ 
+  border-radius: 2px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 13px;
+  padding: 7px;
+  width: 120px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
 </style>
 
 <form method="GET", action="http://localhost:8000/">   
@@ -79,60 +102,32 @@ font-size:15px;
  
 <form class="w3-container">
     <div class="w3-container w3-peach">
-        <h2>Profile Update</h2>
+        <h2>Teachers Data Updation</h2>
       </div><br><br>
- 
- 
-Old password: <input  type="password",  name="oldpass"  id="oldpass"> 
-<i class="far fa-eye"  onclick="oldpassword()"></i><br></br>
-New Password : <input  type="password",  name="newpass"  id="newpass"> 
-<i class="far fa-eye"  onclick="newpassword()"></i><br></br>
-Confirm password : <input  type="password",  name="cpass"  id="cpass">
-<i class="far fa-eye"  onclick="confirmpassword()"></i><br></br>
- 
-<script>
-  function  oldpassword() {
-    var x = document.getElementById("oldpass");
-    if (x.type === "password") {
-      x.type = "text";
-    } else {
-      x.type = "password";
-    }
-  }
+       <tr>
 
-
-  function  newpassword() {
-    var x = document.getElementById("newpass");
-    if (x.type === "password") {
-      x.type = "text";
-    } else {
-      x.type = "password";
-    }
-  }
-
-  function   confirmpassword() {
-    var x = document.getElementById("cpass");
-    if (x.type === "password") {
-      x.type = "text";
-    } else {
-      x.type = "password";
-    }
-  }
-
-
-</script>
-
-
-
-<button class="button" formaction="/profile" >cancel</button>
-   &emsp;  &emsp;  &emsp;   &emsp;  &emsp;
-<button class="button" type="submit">confirm</button>
-<button class="home" formaction="/data" >Home</button>
-<button class="logout" formaction="/warning" >Logout</button>
- 
-
+      
+         id : <input type="text" name="ad_id">   <br><br>
+       name:<input type="text" name="ad_name">  <br><br> 
+    qualification : <input type="text" name="ad_qualification">  <br><br>
+      designation : <input type="text" name="ad_designation">  <br><br>
+      university : <input type="text" name="ad_university">  <br><br>
+      image : <input type="text" name="ad_faculty_image">  <br><br>
+      
+      projects : <input type="text" name="ad_fac_projects">  <br><br>
+      recognisations : <input type="text" name="ad_recognisations">  <br><br>
+      dblp : <input type="text" name="ad_dblp">  <br><br>
+      googleschloar : <input type="text" name="ad_googleschloar">  <br><br>
+      flipid : <input type="text" name="ad_flipid">  <br><br>
+       
+       </tr>  
   
+<button class="button" formaction="/teachers"> Cancel</button>
+   &emsp;  &emsp;  &emsp;   &emsp;  &emsp;
+<button class="button" type="submit">confirm</button><br> <br>
+ 
 
+ 
 </form>     
  
 </body>

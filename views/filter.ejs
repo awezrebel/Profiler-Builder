@@ -14,12 +14,7 @@
  
 
 
-.home {
-position:absolute;
-top: 10px;
-right: 120px;
-font-size: 100px;
-}
+
 
 .info {
 position:absolute;
@@ -196,7 +191,7 @@ body {
 }
 
 .card__side {
-  height: 57rem;
+  height: 62rem;
   -webkit-transition: all 0.8s ease;
   transition: all 0.8s ease;
   position: absolute;
@@ -435,6 +430,23 @@ body{
 h1{
 font-size: 30px;
 }  
+.home {
+  position:absolute;
+top: 10px;
+right: 180px;
+font-size:15px;
+  border-radius: 3px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 15px;
+  padding: 7px;
+  width: 70px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
 
 .logout {
 position:absolute;
@@ -474,7 +486,7 @@ font-size:15px;
 }
 .timer{
 top: 10px;
-right: 150px;
+right: 200px;
 font-size:10px; 
 position:absolute;
  
@@ -538,13 +550,11 @@ h1{
     transform: rotate(360deg);
   }
 }
-
 button{
- 
-  
-  position:absolute;
-  background-color:transparent ;
+position:absolute;
+background-color:transparent ;
 }
+
 </style>
 
 
@@ -597,16 +607,14 @@ button{
 <div class="wrapper">
       <div class="search-input">
         <a href="" target="_blank" hidden></a>
-          <input type="text" placeholder="Type to search.." name="search" id="search">
+          <input type="text" placeholder="Type to search.." name="search"id="search">
           <div id="match-list">
           <div class="autocom-box">
           
           <script src="http://localhost:8080/main.js"></script>
         </div> </div>
         <div class="icon">
-         <button type="submit" class="button" ></button> <i  class="fas fa-search" >   </i>
-     
-        </div>
+          <button type="submit" class="button" ></button> <i  class="fas fa-search" >   </i>
       </div>
     </div>
 
@@ -632,7 +640,7 @@ button{
       
       </div>
      
-      <% print.forEach(function (teachers) { %>
+      <% filter.forEach(function (teachers) { %>
        
 
         
@@ -654,8 +662,7 @@ button{
                   <li><td><%= teachers.designation%></td>  </li>
                   <li><td><%= teachers.university%></td>  </li>
                   <li><td><%= teachers.expert%></td>  </li>
-                 
-                  <li><td><%= teachers.subject%></td>  </li>
+                  <li><td><%= teachers.projects%></td>  </li>
                
                 </ul>
               </div>
@@ -665,11 +672,7 @@ button{
                 <div class="card__price-box">
                  
                 </div>
-                <h7>
-                Projects
-                </h7> <br> <br>
-                <td><%= teachers.projects%></td>   <br> </br>
-                
+              
                 <a href="<%= teachers.googleschloar %> " class="btn btn--white">Google Scholar</a>
                 <br></br>
                 <a href=" <%= teachers.dblp  %> " class="btn btn--white">Dblp</a>  
@@ -702,6 +705,7 @@ button{
     </script> 
   </body>
 </html>
-<button  class="logout" formaction="/warning" >Logout</button>
+<button  class="home" formaction="/data" >Home</button>
 <button class="profile" formaction="/profile" >Profile</button>
+<button  class="logout" formaction="/warning" >Logout</button>
 </html>

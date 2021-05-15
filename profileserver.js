@@ -7,6 +7,7 @@ const path = require('path');
 const router = express.Router();
 var mysql = require('mysql');
 var url = require('url');
+const { SyncStreamContext } = require('twilio/lib/rest/sync/v1/service/syncStream');
  multer = require('multer');
 const upload = multer({storage:multer.memoryStorage()});
  
@@ -95,8 +96,36 @@ var   ad_Parentmobile= query.ad_Parentmobile;
 var   ad_Address= query.ad_Address;
 var   ad_Mail= query.ad_Mail;
 
-//deleting profile 
+//admin adding teachers profile
+
+var ad_id  = query.ad_id;
+var  ad_name = query.ad_name;
+var  ad_qualification = query.ad_qualification;
+var  ad_designation= query.ad_designation;
+var  ad_university = query.ad_university;
+var  ad_fac_projects = query.ad_fac_projects;
+var  ad_faculty_image = query.ad_faculty_image;
+var ad_dblp = query.ad_dblp;
+var ad_googleschloar = query.ad_googleschloar;
+var  ad_recognisations = query.ad_recognisations;
+var  ad_flipid = query.ad_flipid;
+ 
+
+//deleting faculty profile
+
+var ad_del_fac = query.ad_del_fac;
+
+//search box
+
+var search = query.search;
+
+
+//deleting student profile 
 var del_roll=query.del_roll;
+
+//user changing password the link which was sent to mobile
+var user_change=query.user_change;
+var user_cpass=query.user_cpass;
 
 //truncating temporary files
  
@@ -204,6 +233,23 @@ console.log(username);
 console.log(password);
 if(test==1){ 
 res.redirect("/welcome");
+
+fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
+        if (err) throw err;
+        var date = new Date();
+        var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        console.log(" Date   " + date + " Time : " + time);
+        const sql5=`INSERT INTO database1.loginhistory (user, date, time ) VALUES ('${username}' , '${date}' , '${time}')`;
+        mycon.query(sql5, function (err, result) {
+        if (err) throw err;
+        console.log(result);
+        });
+         
+        })
+        
+
+
+
 }
 if(test==0 && m!=null){
 wrongpass();
@@ -251,6 +297,11 @@ console.log("user " + username + "blocked");
     
 count=0;
 }
+ 
+ 
+
+
+
 
 
 
@@ -282,7 +333,7 @@ throw err;
 obj = {welcome: result};
 
 res.render('welcome', obj);   
-console.log(obj);      
+//console.log(obj);      
 }
 });
 });      
@@ -290,7 +341,7 @@ console.log(obj);
 
 
 //teachers data
-var obj6 = {};
+ 
  
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
@@ -298,9 +349,9 @@ app.get('/data', function(req, res){
 
 fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
 if (err) throw err; 
-mycon.query(` select name , image , qualification , designation , university, projects, recognisations  , dblp , googleschloar , expert.subject   , frontflip , backflip  
-from teachers , expert   , flipcard  
-where (teachers.id = expert.id   && teachers.flipid = flipcard.flipid)  `, function(err, result) {
+mycon.query(` select name , image , qualification , designation , university, projects, recognisations , expert.subject   , dblp , googleschloar , expert.subject   , frontflip , backflip  
+from teachersdata , expert   , flipcard  
+where (teachersdata.id = expert.id   && teachersdata.flipid = flipcard.flipid)  `, function(err, result) {
         
 if(err){
 throw err;
@@ -308,16 +359,39 @@ throw err;
 obj = {print: result};
 
 res.render('print', obj);   
-console.log(obj);      
+//console.log(obj);      
 }
-
-
  
-
 });
 });      
 });
 
+
+
+//filter teachers data
+var obj7 = {};
+
+if(search != null){
+
+console.log("search                    " + search)
+ 
+mycon.query(`select name , qualification , designation , image , dblp , googleschloar, university, projects, recognisations  ,  frontflip , backflip from teachers   , flipcard  
+where (teachers.flipid = flipcard.flipid  && teachers.id = (select id from expert where subject= '${search}') );`, function(err, result) {
+        
+if(err){
+throw err;
+} else
+{
+obj7 = {filter: result};
+res.render('filter', obj7);   
+}
+});     
+ 
+
+obj7.truncate;
+//console.log("obj 7 ->     " + obj7);
+search=null;
+}
 
 
 
@@ -368,7 +442,7 @@ mycon.query(`  select username,rollno, username, dob, mobile, cgpa, projects, im
         } else {
         obj1 = {profile: result};
         res.render('profile', obj1);   
-        console.log(obj1);      
+        //console.log(obj1);      
         }
         });
 });
@@ -389,15 +463,33 @@ mycon.query(`  SELECT * FROM database1.profile; `, function(err, result) {
         } else {
         obj1 = {students: result};
         res.render('students', obj1);   
-        console.log(obj1);      
+       // console.log(obj1);      
         }
         });
 });
 }); 
 
 
+//ADMIN Getting Teachers Details
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine', 'ejs');
+app.get('/teachers', function(req, res) { 
+fs.readFile('currentlogin.txt', 'utf-8', (err, data) => { 
+if (err) throw err;         
+mycon.query(`  SELECT * FROM database1.teachers; `, function(err, result) {
+        if(err){
+        throw err;
+        } else {
+        obj1 = {teachers: result};
+        res.render('teachers', obj1);   
+      //  console.log(obj1);      
+        }
+        });
+});
+}); 
 
-//admin getting login details 
+
+//ADMIN getting login details 
 var obj8 = {};
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
@@ -409,7 +501,7 @@ throw err;
 } else {
 obj8 = {student_login: result};
 res.render('student_login', obj8);   
-console.log(obj8); 
+//console.log(obj8); 
 }
 });
  
@@ -424,8 +516,15 @@ app.get('/st_del', function(req,res){
 res.sendfile("st_del.html");       
 });
 
+app.get('/fac_add', function(req,res){
+        res.sendfile("teachersdata.html");
+});
 
-//admin enrolling student 
+app.get('/fac_del', function(req,res){
+res.sendfile("fac_del.html");
+});
+
+//ADMIN enrolling student 
 if(create_name != undefined && create_pwd !=undefined && create_roll != undefined){
  
 mycon.query(` INSERT INTO database1.login (uname, pwd, name) VALUES ('${create_roll}', '${create_pwd}', '${create_name}');`, function(err, result) {
@@ -434,13 +533,30 @@ throw err;
 } else {
 obj8 = {student_login: result};
 res.render('student_login', obj8);   
-console.log(obj8); 
+//console.log(obj8); 
 }
  
 });
 
 res.sendfile("success.html");
 }    
+
+
+
+//ADMIN enrolling faculty
+if(ad_name != undefined && ad_id !=undefined && ad_qualification != undefined){
+ mycon.query(` INSERT INTO database1.teachers (id, name, qualification, designation, university, image, projects, recognisations, dblp, googleschloar, flipid) VALUES ('${ad_id}', '${ad_name}', '${ad_qualification}', '${ad_designation}', '${ad_university}', '${ad_faculty_image}', '${ad_fac_projects}', '${ad_recognisations}', '${ad_dblp}', '${ad_googleschloar}', '${ad_flipid}');`, function(err, result) {
+        if(err){
+        throw err;
+        }   
+        });
+        
+        res.sendfile("success.html");
+        }    
+        
+        
+
+
 
 //admin removing student
 
@@ -451,13 +567,28 @@ if(create_roll != undefined && create_name == undefined && create_pwd == undefin
                 } else {
                 obj8 = {student_login: result};
                 res.render('student_login', obj8);   
-                console.log(obj8); 
+              //  console.log(obj8); 
                 }
                  
                 });
                 
-                res.sendfile("success.html");
+res.sendfile("success.html");
 }
+
+
+
+//admin removing student
+
+if(ad_del_fac != undefined ){
+mycon.query(` DELETE FROM database1.teachers WHERE (name = '${ad_del_fac}')`, function(err, result) {
+if(err){
+throw err;
+}  
+});              
+res.sendfile("success.html");
+}
+
+
 
 app.get('/st_profile',function(req,res){
 res.sendfile("st_profile.html");
@@ -537,10 +668,12 @@ success=1;
 if(success==1){
  
 mycon.query(` UPDATE database1.login SET pwd = '${cpass}' WHERE (uname = '${data}');`, function(err, result) {  
-res.sendfile("psuccess.html");  
+res.sendfile("psuccess.html"); 
+var spawn = require("child_process").spawn; 
+var process = spawn('python',["./passnotif.py",] );  
 if(err) throw err;
 
-console.log(result);
+//console.log(result);
 })
 }else{
         res.send("old password feild data did not matched with our database");
@@ -552,6 +685,13 @@ res.send("password and confirm password are not matched")
 
 }
         )}
+
+
+if(user_change !=null && user_cpass !=null){
+mycon.query(` UPDATE database1.login SET pwd = '${user_cpass}' WHERE (uname = '${user_change}');`, function(err, result) {  
+res.sendfile("psuccess.html");      
+})
+}
 
 //workshops
 var obj2 = {};
@@ -566,7 +706,7 @@ app.get('/workshops',function(req,res){
                         } else {
                         obj2 = {workshops: result};
                         res.render('workshops', obj2);   
-                        console.log(obj2);      
+                      //  console.log(obj2);      
                         }
                         });
                 });
@@ -585,7 +725,7 @@ app.get('/skills',function(req,res){
                         } else {
                         obj3 = {skills: result};
                         res.render('skills', obj3);   
-                        console.log(obj3);      
+                       // console.log(obj3);      
                         }
                         });
                 });
@@ -607,7 +747,7 @@ app.get('/Achievements',function(req,res){
                         } else {
                         obj4 = {Achievements: result};
                         res.render('Achievements', obj4);   
-                        console.log(obj4);      
+                       // console.log(obj4);      
                         }
                         });
                 });
@@ -628,7 +768,7 @@ app.get('/projects',function(req,res){
                         } else {
                         obj5 = {projects: result};
                         res.render('projects', obj5);   
-                        console.log(obj5);      
+                      //  console.log(obj5);      
                         }
                         });
                 });
@@ -652,7 +792,7 @@ if(Organisation != null){
                 if (err) throw err;         
                 mycon.query(` INSERT INTO database1.workshops (certificateid, rollno, Organisation, duration, Objective,Tools,Outcome) VALUES ('${id}','${data}', '${Organisation}','${duration}','${Objective}','${Tools}','${Outcome}')`, function(err, result) {
                         if(err) throw err;
-                        console.log(result);
+                      //  console.log(result);
                         });
                 });
                 res.sendfile("usuccess.html");
@@ -677,7 +817,7 @@ if(languages  != null){
                 if (err) throw err;         
                 mycon.query(` INSERT INTO database1.skills (rollno , languages , web , tools) VALUES ('${data}','${languages}','${web}', '${tools}')`, function(err, result) {
                         if(err) throw err;
-                        console.log(result);
+                       // console.log(result);
                         });
                 });
                 res.sendfile("usuccess.html");
@@ -691,7 +831,7 @@ app.get('/sdelete',function(req,res){
                         if (err) throw err; 
                 mycon.query(  `DELETE FROM database1.skills WHERE (rollno = '${data}')`,function(err,result){
                 if(err) throw err;
-                console.log(result);
+              //  console.log(result);
                 });
         })
                 res.sendfile("usuccess.html")
@@ -709,7 +849,7 @@ if(POutcome != null){
                 if (err) throw err;         
                 mycon.query(` INSERT INTO database1.projects (rollno, Topic, Duration, Objective, Tools, Outcome) VALUES ('${data}','${PTopic}','${PDuration}', '${PObjective}','${PTools}','${POutcome}')`, function(err, result) {
                         if(err) throw err;
-                        console.log(result);
+                       // console.log(result);
                         });
                 });
                 res.sendfile("usuccess.html");
@@ -722,7 +862,7 @@ if(Topic != null){
         if (err) throw err; 
         mycon.query(  `DELETE FROM database1.projects WHERE (Topic = '${Topic}')`,function(err,result){
         if(err) throw err;
-        console.log(result);
+      //  console.log(result);
         });
 })
         res.sendfile("usuccess.html")
@@ -739,7 +879,7 @@ if(AName != null){
                         if (err) throw err;         
                         mycon.query(` INSERT INTO database1.Achievements   (rollno, Name , Details , Location) VALUES ('${data}','${AName}','${Details}', '${Location}')`, function(err, result) {
                                 if(err) throw err;
-                                console.log(result);
+                                //console.log(result);
                                 });
                         });
                         res.redirect("/success");
@@ -753,7 +893,7 @@ if(ADName != null){
   
         mycon.query(  `DELETE FROM database1.Achievements WHERE (Name = '${ADName}')`,function(err,result){
         if(err) throw err;
-        console.log(result);
+       // console.log(result);
         });
  
         res.sendfile("usuccess.html")
@@ -766,7 +906,7 @@ fs.readFile('currentlogin.txt', 'utf-8', (err, data) => {
 if (err) throw err; 
 mycon.query(  `truncate table database1.currentlogin `,function(err,result){
         if(err) throw err;
-        console.log(result);
+       // console.log(result);
         });
 fs.truncate('currentlogin.txt', 0, function() {
 console.log("File Content Deleted");
@@ -825,11 +965,30 @@ throw err;
 } else {
 obj1 = {activelogins: result};
 res.render('activelogins', obj1);   
-console.log(obj1);      
+//console.log(obj1);      
 }
 });
 })
 });
+
+
+
+app.get('/loginhistory',function(req,res){
+      
+mycon.query(`SELECT  user , date, time  , images from loginhistory , profile  where (profile.rollno=user )`, function(err, result) {
+if(err){
+throw err;
+} else {
+obj1 = {loginhistory: result};
+res.render('loginhistory', obj1);   
+//console.log(obj1);      
+}
+});
+ 
+});
+        
+
+
 
 })
 app.listen(8000);
