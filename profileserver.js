@@ -148,7 +148,7 @@ c+=1;
 var mycon = mysql.createmycon({
 host: "database-1.cxg5ddbyrmb4.us-east-1.rds.amazonaws.com",
 user: "admin",
-password: "12345678", // sensitive
+password: "#2wqewqeda!@$2432QRQQR2$!#!$!$!", // sensitive
 multipleStatements: true ,
 port: "3306",
 database: "database1"
