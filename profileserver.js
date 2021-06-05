@@ -154,17 +154,15 @@ c+=1;
 //mycon with database
 //aws rds
 
-var mycon = mysql.createConnection({
-connectionLimit: 10,
-acquireTimeout: 30000, //30 secs
-host: process.env.MYSQL_URL || 'mysql-32699-0.cloudclusters.net' ,
-user: process.env.MYSQL_USERNAME || 'admin',
-password: process.env.MYSQL_PASSWORD || 'edJABCot', 
-database: process.env.MYSQL_DATABASE || 'database1',
-port: "32699",
-multipleStatements: true 
-
- 
+ var mycon = mysql.createConnection({
+        connectionLimit: 10,
+        acquireTimeout: 30000, //30 secs
+        host: 'mysql-32699-0.cloudclusters.net',
+        user: 'root',
+        password: 'Awez@0987',
+        port: '3306',
+        database: 'database1',
+       multipleStatements: true 
 });
  
 //localhost
