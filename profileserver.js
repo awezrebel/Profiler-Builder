@@ -155,7 +155,7 @@ c+=1;
 //aws rds
  
  
-var connection = mysql.createConnection({
+var mycon = mysql.createConnection({
   host: process.env.MYSQL_URL,
   user: process.env.MYSQL_USERNAME,
   password: process.env.MYSQL_PASSWORD,
