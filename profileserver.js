@@ -11,6 +11,7 @@ const { SyncStreamContext } = require('twilio/lib/rest/sync/v1/service/syncStrea
 let multer = require('multer');
 const upload = multer({storage:multer.memoryStorage()});
 var port1 = process.env.PORT || 8000;
+
 var c=0;
  
 let app = express();
@@ -156,12 +157,14 @@ c+=1;
 var mycon = mysql.createConnection({
 connectionLimit: 10,
 acquireTimeout: 30000, //30 secs
-host: "mysql-32699-0.cloudclusters.net",
-user: "admin",
-password: "mcnsmsn@#@#^&*^(%#$@^^*(&^&%42345681dsk62318793bsshagjHjA&^%^*", // sensitive
+
+host: process.env.MYSQL_URL || 'mysql-32699-0.cloudclusters.net' ,
+user: process.env.MYSQL_USERNAME || "admin",
+password: process.env.MYSQL_PASSWORD || "edJABCot", // sensitive
+database: process.env.MYSQL_DATABASE || "database1",
 multipleStatements: true ,
-port: "32699",
-database: "database1"
+port: "32699"
+ 
 });
 
 
