@@ -158,7 +158,7 @@ connectionLimit: 10,
 acquireTimeout: 30000, //30 secs
 host: "mysql-32699-0.cloudclusters.net",
 user: "admin",
-password: "edJABCot", // sensitive
+password: "mcnsmsn@#@#^&*^(%#$@^^*(&^&%42345681dsk62318793bsshagjHjA&^%^*", // sensitive
 multipleStatements: true ,
 port: "32699",
 database: "database1"
