@@ -6,13 +6,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://bootswatch.com/cyborg/"/>
-    <link rel="stylesheet" href="http://localhost:8080/css/search.css"/>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   
 <body>
 <style>
  
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
 
+body{
+  background: #644bff;
+  padding: 0 20px;
+}
+
+::selection{
+  color:black;
+  background: #664AFF;
+}
+
+.wrapper{
+  max-width: 450px;
+  margin: 40px auto;
+}
+
+.wrapper .search-input{
+  background: #fff;
+  width: 100%;
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.12);
+}
+
+.search-input input{
+  height: 55px;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 0 60px 0 20px;
+  font-size: 18px;
+  box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
+}
+
+.search-input.active input{
+  border-radius: 5px 5px 0 0;
+}
+
+.search-input .autocom-box{
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.search-input.active .autocom-box{
+  padding: 10px 8px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.autocom-box li{
+  list-style: none;
+  padding: 8px 12px;
+  display: none;
+  width: 100%;
+  cursor: default;
+  border-radius: 3px;
+}
+
+.search-input.active .autocom-box li{
+  display: block;
+}
+.autocom-box li:hover{
+  background: #efefef;
+}
+
+.search-input .icon{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  height: 55px;
+  width: 55px;
+  text-align: center;
+  line-height: 55px;
+  font-size: 20px;
+  color: #644bff;
+  cursor: pointer;
+}
 
 
 
@@ -28,7 +115,7 @@ font-size: 100px;
  
  
 body {
-background-image: url('http://localhost:8080/images/background.png');
+  background-image:url(" https://w.wallhaven.cc/full/39/wallhaven-39mxkv.png");
          
 }
   
@@ -578,7 +665,7 @@ background-color:transparent ;
 <thead>  
 <tr>  
  
-<form method="GET", action="http://localhost:8000/">     
+<form method="GET", action="https://profilebuilder-se.herokuapp.com/">     
 </tr>  
 </thead>  
 <tbody>  
@@ -611,7 +698,46 @@ background-color:transparent ;
           <div id="match-list">
           <div class="autocom-box">
           
-          <script src="http://localhost:8080/main.js"></script>
+            <script>
+              const search=document.getElementById('search');
+            const matchList = document.getElementById('match-list');
+            
+            const searchStates = async searchText =>{
+            const res = await fetch('https://raw.githubusercontent.com/awezrebel/profile/main/teachersdata.json');
+            const states = await res.json(); 
+            
+            let matches = states.filter(state =>{
+            const regex = new RegExp(`^${searchText}`,'gi');
+            return  state.subject.match(regex);
+            });
+            
+            if(searchText.length ===0){
+            matches=[];
+            matchList.innerHTML='';
+            }
+            console.log(matches);
+            outputHtml(matches);
+            };
+            
+            const outputHtml = matches =>{
+                if(matches.length > 0){
+                    const html =matches.map(
+                    match => `
+                    
+                    <a  href="https://profilebuilder-se.herokuapp.com/?search=${match.subject}"  style="text-decoration: none;"  style="color:black">
+                    <h4>${match.subject}  
+                        
+                        </h4>
+                    <small>Faculty: ${match.faculty} , Designation : ${match.Designation}</small>
+                    </a> `    
+                    ).join('');
+            
+                matchList.innerHTML=html;
+                }
+            }
+            search.addEventListener('input',() => searchStates(search.value));
+            
+         </script>
         </div> </div>
         <div class="icon">
           <button type="submit" class="button" ></button> <i  class="fas fa-search" >   </i>

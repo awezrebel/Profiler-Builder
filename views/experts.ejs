@@ -12,7 +12,12 @@
  
 
 
- 
+.home {
+position:absolute;
+top: 10px;
+right: 120px;
+font-size: 100px;
+}
 
 .info {
 position:absolute;
@@ -65,7 +70,25 @@ font-size:15px;
   cursor: pointer;
   margin: 5px;
 }
+.home {
+position:absolute;
+top: 10px;
+right: 190px;
  
+font-size:15px;
+  border-radius: 3px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 15px;
+  padding: 7px;
+  width: 70px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+  
 div.polaroid {
   
   width: 9%;
@@ -101,7 +124,7 @@ font-size:15px;
 
 .add  {
 position:absolute;
-bottom: 100px;
+ 
 left: 650px;
  
 font-size:15px;
@@ -120,7 +143,7 @@ font-size:15px;
 
 .Remove  {
 position:absolute;
-bottom: 100px;
+ 
 left: 750px;
  
 font-size:15px;
@@ -139,6 +162,7 @@ font-size:15px;
 h2{
   text-align: center;
 }
+
 
 
 
@@ -178,10 +202,12 @@ font-size:15px;
   margin: 5px;
 }
 
-.History {
+
+
+.wel_admin {
 position:absolute;
 top: 10px;
-right: 180px;
+right: 200px;
 font-size:15px;
   border-radius: 3px;
   background-color: #f4511e;
@@ -197,61 +223,38 @@ font-size:15px;
 }
 
 
-.button {
-position:absolute;
+
+.loader {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  text-align: center;
+}
+.loader:after {
+  
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid yellow;
+  border-color:red transparent yellow transparent;
+  animation: loader 1.2s linear infinite;
+  text-align: center;
+}
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+  
+}
  
-font-size:15px;
-  border-radius: 3px;
-  background-color: #f4511e;
-  border: none;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 15px;
-  padding: 7px;
-  width: 70px;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-}
 
 
-
-.home {
-position:absolute;
-top: 10px;
-right: 420px;
-font-size:15px;
-  border-radius: 3px;
-  background-color: #f4511e;
-  border: none;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 15px;
-  padding: 7px;
-  width: 70px;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-}
-
-.password{
-  position:absolute;
-top: 10px;
-right: 260px;
-font-size:15px;
-  border-radius: 3px;
-  background-color: #f4511e;
-  border: none;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 15px;
-  padding: 7px;
-  width: 150px;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-
-}
 </style>
  
 <table id="table" >  
@@ -263,9 +266,16 @@ font-size:15px;
  
 
     
-  <h2>Active logins</h2>   
+  <h2>Teachers  Data </h2>   
+  <center>
+
  
- 
+  <div class="loader">
+    <div></div>    
+  
+    </div>
+  </center>
+  
 </thead>  
 <tbody>
     <div class="container">
@@ -273,36 +283,49 @@ font-size:15px;
         <table class="table table-striped">
           <thead>
             <tr>
-               
-                <th> Username</th>
-                
-                <th> Rollno</th>
-                <th>      </th>
-                <th> Mobile     </th>
-                <th>      </th>
-                <th> Mail </th>
-                <th>      </th>
-                <th>      </th>
-                <th>  </th>
-                <th>      </th>
-                <th>   Images   </th>
-                <th>  </th>
-                <th>      </th>
-           
-              </tr>
+              <th>    ID         </th>
+              <th>                  </th>
+              <th>        Name        </th>
+              <th>                 </th> 
+              <th>               </th> 
+              <th>              </th>
+              <th>                  </th> 
+        
+              <th>            </th> 
+              <th>     Expert      </th>
+              <th>             </th>
+              <th>           </th>
+              <th>              </th>
+              <th>              </th>
+              <th>              </th>
+              <th>              </th>
+              <th>              </th>
+               <th>              </th>
+              <th>      </th>
+              <th>              </th>
+              <th>               </th>
+              <th>               </th>     
+              <th>    Image           </th>
+              <th>               </th>  
+              <th>               </th> 
+              <th>               </th> 
+              <th>              </th>
+            </tr>
             </thead>
     
          
 
             <div class="container"> 
         <table class="table table-striped">
-        <% activelogins.forEach(function (login) { %>  
+        <% experts.forEach(function (teachers) { %>  
        <tr> 
-        <td><%=  login.username %>     </td> 
-        <td><%=  login.rollno %>     </td> 
-        <td> <%= login.mobile %>      </td>
-        <td> <%= login.mail %>      </td>
-        <td>  <img src="data:image/jpg;base64,<%=login.images%>" width="150" alt="image not available"></img> </td> 
+        
+        <td><%=  teachers.id%>     </td> 
+        <td> <%= teachers.name%>      </td>
+        <td> <%= teachers.subject %>   </td> 
+ 
+
+        <td>  <img src="<%= teachers.image%> " width="150" alt="image not available"></img> </td> 
       </tr> 
                 
         <% }) %>
@@ -314,15 +337,19 @@ font-size:15px;
 
 
  
- 
-<button class="refresh" formaction="/currentlogin">Refresh</button>  
-<button class="History" formaction="/loginhistory">History</button>  
+<button class="add" formaction="/exp_add">ADD</button>    
+<button class="Remove" formaction="/exp_del">Remove</button>    
 
-<button class="home" formaction="/welcome_admin">Home</button>  
-<button class="password" formaction="/passwordchanged">password changed</button>  
- 
-
+<button class="wel_admin" formaction="/welcome_admin">Home</button>  
+<button class="refresh" formaction="/expert">Refresh</button>  
 <button  class="logout" formaction="/warning" >Logout</button>
+
+<script>
+  $(window).on('load',function(){
+  $(".loader").fadeOut(1000);
+  
+  })
+</script> 
 </body>
 
  
