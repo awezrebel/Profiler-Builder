@@ -153,22 +153,27 @@ c+=1;
 
 //mycon with database
 //aws rds
-
- const mycon = mysql.createConnection({ host: 'mysql-32699-0.cloudclusters.net', user: 'admin' , password: 'edJABCot', database: 'database1', port: '32699' });
-
-
+ 
+/*
+var connection = mysql.createConnection({
+  host: process.env.MYSQL_URL,
+  user: process.env.MYSQL_USERNAME,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE
+});
+*/
 //localhost
- /*
+ 
 var mycon = mysql.createConnection({
         connectionLimit: 10,
         acquireTimeout: 30000, //30 secs
         host: '192.168.171.35',
         user: 'root',
-        password: 'Awez@0987',
+        password: 'Awez@0987', //sensitive
         port: '3306',
         database: 'database1',
        multipleStatements: true 
-});*/
+}); 
  
  
 if(uname!=null){
