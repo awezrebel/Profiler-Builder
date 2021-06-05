@@ -161,8 +161,9 @@ host: process.env.MYSQL_URL || 'mysql-32699-0.cloudclusters.net' ,
 user: process.env.MYSQL_USERNAME || 'admin',
 password: process.env.MYSQL_PASSWORD || 'edJABCot', 
 database: process.env.MYSQL_DATABASE || 'database1',
-multipleStatements: true ,
-port: "32699"
+ port: "32699",
+multipleStatements: true 
+
  
 });
  
