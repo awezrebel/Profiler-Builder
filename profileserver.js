@@ -154,7 +154,7 @@ c+=1;
 //mycon with database
 //aws rds
 
-const mycon = mysql.createConnection({
+const mycon = mysql.createPoolCluster({
 connectionLimit: 10,
 acquireTimeout: 30000, //30 secs
 
