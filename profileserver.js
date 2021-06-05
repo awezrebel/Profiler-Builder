@@ -5,7 +5,7 @@ let express=require('express');
 var validator = require('validator');
 const path = require('path');
 const router = express.Router();
-const mysql = require('mysql');
+var mysql = require('mysql');
 var url = require('url');
 const { SyncStreamContext } = require('twilio/lib/rest/sync/v1/service/syncStream');
 let multer = require('multer');
@@ -153,17 +153,30 @@ c+=1;
 
 //mycon with database
 //aws rds
- 
- 
+
 const mycon = mysql.createConnection({
-  host: process.env.MYSQL_URL,
-  user: process.env.MYSQL_USERNAME,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE
+ 
+host: process.env.MYSQL_URL || 'mysql-32699-0.cloudclusters.net' ,
+user: process.env.MYSQL_USERNAME || "admin",
+password: process.env.MYSQL_PASSWORD || "edJABCot", // sensitive
+database: process.env.MYSQL_DATABASE || "database1",
+multipleStatements: true ,
+port: "32699"
+ 
 });
  
 //localhost
- 
+ /*
+var mycon = mysql.createConnection({
+        connectionLimit: 10,
+        acquireTimeout: 30000, //30 secs
+        host: '192.168.171.35',
+        user: 'root',
+        password: 'Awez@0987',
+        port: '3306',
+        database: 'database1',
+       multipleStatements: true 
+});*/
  
  
 if(uname!=null){
