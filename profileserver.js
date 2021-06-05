@@ -154,18 +154,7 @@ c+=1;
 //mycon with database
 //aws rds
 
-const mycon = mysql.createPoolCluster({
-connectionLimit: 10,
-acquireTimeout: 30000, //30 secs
-
-host: process.env.MYSQL_URL || 'mysql-32699-0.cloudclusters.net' ,
-user: process.env.MYSQL_USERNAME || "admin",
-password: process.env.MYSQL_PASSWORD || "edJABCot", // sensitive
-database: process.env.MYSQL_DATABASE || "database1",
-multipleStatements: true ,
-port: "32699"
- 
-});
+ const mycon = mysql.createConnection({ host: 'mysql-32699-0.cloudclusters.net', user: 'admin' , password: 'edJABCot', database: 'database1', port: '32699' });
 
 
 //localhost
