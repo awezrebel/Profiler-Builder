@@ -159,7 +159,7 @@ c+=1;
         acquireTimeout: 30000, //30 secs
         host: 'mysql-32699-0.cloudclusters.net',
         user: 'root',
-        password: 'Awez@0987',
+        password: 'Awez@0987', //sensitve
         port: '3306',
         database: 'database1',
        multipleStatements: true 
