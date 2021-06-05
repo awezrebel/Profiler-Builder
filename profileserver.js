@@ -1,6 +1,6 @@
 var http = require('http');
 const fs = require('fs'); 
-const fse = require('fs-extra');  
+//const fse = require('fs-extra');  
 let express=require('express');
 var validator = require('validator');
 const path = require('path');
@@ -10,12 +10,14 @@ var url = require('url');
 const { SyncStreamContext } = require('twilio/lib/rest/sync/v1/service/syncStream');
 let multer = require('multer');
 const upload = multer({storage:multer.memoryStorage()});
- 
+var port1 = process.env.PORT || 8000;
 var c=0;
  
 let app = express();
 app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
+
+ 
 app.get('/', function(req,res) {
 var query = require('url').parse(req.url,true).query;
  
@@ -24,7 +26,8 @@ var uname=query.uname;
 var uname1=query.uname1;
 var password=query.password;
 var pwd=query.pwd;
-var otp=query.otp;
+var cpwd=query.cpwd;
+var otp_user=query.otp;
  
 
 //workshop update
@@ -119,7 +122,11 @@ var del_roll=query.del_roll;
 //user changing password the link which was sent to mobile
 var user_change=query.user_change;
 var user_cpass=query.user_cpass;
-
+ 
+var expert_add_id = query.expert_add_id;
+var expert_add_subject = query.expert_add_subject;
+var expert_add_name = query.expert_add_name;
+var exp_rem= query.exp_rem;
 //truncating temporary files
  
 if(c==0){
@@ -135,7 +142,8 @@ console.log("File Content Deleted");
 
 c+=1;
 }
-
+ 
+        
 //REMOVE COMMENTS WHILE RUNNING JTEST
 
 //res.sendfile("Jtest.html");
@@ -144,51 +152,52 @@ c+=1;
 
 //mycon with database
 //aws rds
- 
+
 var mycon = mysql.createConnection({
-host: 'database-1.cxg5ddbyrmb4.us-east-1.rds.amazonaws.com',
-user: 'admin',
-
-password: '#2wqewqeda!@$2432QRQQR2$!#!$!$!', // sensitive
-database: 'database1',
-port: '3306',
- multipleStatements: true 
-
+connectionLimit: 10,
+acquireTimeout: 30000, //30 secs
+host: "mysql-32699-0.cloudclusters.net",
+user: "admin",
+password: "edJABCot", // sensitive
+multipleStatements: true ,
+port: "32699",
+database: "database1"
 });
- 
- 
+
+
 //localhost
  /*
 var mycon = mysql.createConnection({
-        host: 'localhost',
+        connectionLimit: 10,
+        acquireTimeout: 30000, //30 secs
+        host: '192.168.171.35',
         user: 'root',
         password: 'Awez@0987',
         port: '3306',
         database: 'database1',
-    
        multipleStatements: true 
-});
-
- */
+});*/
+ 
+ 
 if(uname!=null){
-res.sendfile("otp.html");
-var spawn = require("child_process").spawn; 
-var process = spawn('python',["./otpv.py",] ); 
-console.log("Generating Otp " + process);
+res.redirect("/otp");
 };
 
 
 app.get('/otp', function(req1, res1) {
-res1.sendfile("otp.html");
-  spawn = require("child_process").spawn; 
-  process = spawn('python',["./otpv.py",] ); 
+res1.sendfile("otp.html"); 
+var spawn = require("child_process").spawn; 
+var process = spawn('python',["./otpv.py",] ); 
 console.log("Generating Otp " + process);
 })
 
 //login
  
 if(username != undefined && password != undefined) {
-fse.truncate('currentlogin.txt')
+fs.truncate('currentlogin.txt', 0, function() {
+console.log("File Content Deleted");
+});
+
 fs.readFile('block.txt', 'utf-8', (err, data) => { 
 if (err) throw err;
 
@@ -232,10 +241,14 @@ res.redirect("/welcome");
 
 fs.readFile('currentlogin.txt', 'utf-8', (err, data1) => { 
         if (err) throw err;
-        var date = new Date();
-        var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-        console.log(" Date   " + date + " Time : " + time);
-        const sql5=`INSERT INTO database1.loginhistory (user, date, time ) VALUES ('${username}' , '${date}' , '${time}')`;
+        var currentTime = new Date();
+        var da=currentTime.getDate() + ":" + currentTime.getMonth() + ":" + currentTime.getFullYear() ;
+        var currentOffset = currentTime.getTimezoneOffset();
+        var ISTOffset = 330;   // IST offset UTC +5:30 
+        var ISTTime = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);
+        var time = ISTTime.getHours() + ":" + ISTTime.getMinutes() + ":" + ISTTime.getSeconds();
+        console.log(" Date   " + currentTime + " Time : " + time);
+        const sql5=`INSERT INTO database1.loginhistory (user, date, time ) VALUES ('${username}' , '${currentTime}' , '${time}')`;
         mycon.query(sql5, function (err2, result) {
         if (err2) throw err2;
         console.log(result);
@@ -258,9 +271,9 @@ wrongpass();
 
 
 function wrongpass(){
-  count=0;
+count=0;
 let data = username+",";
-fs.appendFile('Out.txt', data, (err) => { 
+fs.appendFile('out.txt', data, (err) => { 
 if (err) throw err; 
 }) 
 var count=0;
@@ -393,25 +406,41 @@ search=null;
 
 
 //forgot password 
-if(otp!=null){
-fs.readFile('otp.txt', 'utf-8', (err, data) => { 
-if (err) throw err; 
-if(otp==data){
+var ack=null;
+if(otp_user!=null){
+mycon.query('SELECT * from otp', function (error,otp, fields) {
+if (error) throw error;
+var length = otp.length;
+var p=null;
+
+for(var i = 0; i < length; i++){
+if (otp[i].user==uname1){
+ 
+p=i;
+
+if(otp[p].otp==otp_user){
+
+if(pwd==cpwd){
 forgotpass();
+}else{
+res.send("password and confirm password are not same");
+}
+
 }else{
 res.send("please provide the correct otp");
 }
-});
+}
+}
+})
+console.log("user " + uname1 + "  otp user got = " + otp_user + " acknowledge " + ack )
+ 
+ 
  
     
 
 
 
 function forgotpass() {
-mycon.connect(function (err) {
-if (err) throw err;
-console.log("Connected RDS");
-});
 const sql3=`UPDATE login SET pwd = '${pwd}' WHERE (uname ='${uname1}')`;
 mycon.query(sql3, function (err, result) {
 if (err) throw err;
@@ -519,6 +548,27 @@ app.get('/fac_add', function(req,res){
 app.get('/fac_del', function(req,res){
 res.sendfile("fac_del.html");
 });
+
+
+app.get('/exp_add', function(req,res){
+res.sendfile("./8080/htmls/experts/exp_add.html");
+});
+
+app.get('/exp_del', function(req,res){
+res.sendfile("./8080/htmls/experts/exp_del.html");
+});
+
+if(exp_rem != null){
+mycon.query(`DELETE FROM database1.expert WHERE (id = '${exp_rem}');`, function(err, result) {
+if(err){
+throw err;
+}   
+});
+res.sendfile("success.html");
+}  
+
+
+ 
 
 //ADMIN enrolling student 
 if(create_name != undefined && create_pwd !=undefined && create_roll != undefined){
@@ -681,7 +731,7 @@ res.send("password and confirm password are not matched")
 }
 
 }
-        )}
+)}
 
 
 if(user_change !=null && user_cpass !=null){
@@ -984,15 +1034,82 @@ res.render('loginhistory', obj1);
  
 });
         
+app.get('/passwordchanged', function(req,res){
+mycon.query(`select user, otp, time , profile.rollno , profile.images from otp, profile where (otp.user = profile.rollno);`, function(err, result) {
+if(err){
+throw err;
+} else {
+obj1 = {passwordchanged: result};
+res.render('passwordchanged', obj1);   
+//console.log(obj1);      
+}
+});
+})
 
 
+
+app.get('/expert', function(req,res){
+mycon.query(`select teachers.id , name , image, expert.subject from teachers , expert where (teachers.id = expert.id)`, function(err, result) {
+if(err){
+throw err;
+} else {
+obj1 = {experts: result};
+res.render('experts', obj1);   
+//console.log(obj1);      
+}
+});
+})
+
+
+if(expert_add_id != null){
+mycon.query(`INSERT INTO database1.expert (id, subject) VALUES ('${expert_add_id}', '${expert_add_subject}');`, function(err, result) {
+if(err){
+throw err;
+}
+ 
+res.sendfile("psuccess.html");
+});
+}
+       
+app.get('/acheivmentsupdate', function(req,res){
+res.sendfile("./8080/htmls/Achievements/aupdate.html");
+})
+app.get('/acheivmentsdel', function(req,res){
+res.sendfile("./8080/htmls/Achievements/adelete.html");
+})
+        
+app.get('/projectupdate', function(req,res){
+res.sendfile("./8080/htmls/projects/pupdate.html");
+})
+        
+app.get('/projectdel', function(req,res){
+res.sendfile("./8080/htmls/projects/pdelete.html");
+})        
+app.get('/skillsupdate', function(req,res){
+res.sendfile("./8080/htmls/skills/supdate.html");
+})
+                
+app.get('/skillsdel', function(req,res){
+res.sendfile("./8080/htmls/skills/sdelete.html");
+})        
+
+app.get('/workshopupdate', function(req,res){
+res.sendfile("./8080/htmls/workshop/wupdate.html");
+})
+                        
+app.get('/workshopdel', function(req,res){
+res.sendfile("./8080/htmls/workshop/wdelete.html");
+})
+        
 
 })
-app.listen(8000);
+app.listen(port1,() => {
+
+
 
 module.exports.app = app;
 //jest.setTimeout(5000);
 console.log("hi shaik iam listening to port 8000 ")
 
 
-
+});
