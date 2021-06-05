@@ -145,13 +145,13 @@ c+=1;
 //mycon with database
 //aws rds
  
-var mycon = mysql.createmycon({
+var mycon = mysql.createConnection({
 host: 'database-1.cxg5ddbyrmb4.us-east-1.rds.amazonaws.com',
-user: "admin",
-database: "database1",
-password: "#2wqewqeda!@$2432QRQQR2$!#!$!$!", // sensitive
+user: 'admin',
 
-port: "3306",
+password: '#2wqewqeda!@$2432QRQQR2$!#!$!$!', // sensitive
+database: 'database1',
+port: '3306',
  multipleStatements: true 
 
 });
