@@ -155,7 +155,8 @@ c+=1;
 //aws rds
 
 const mycon = mysql.createConnection({
- 
+         connectionLimit: 10,
+        acquireTimeout: 30000, //30 secs
 host: process.env.MYSQL_URL || 'mysql-32699-0.cloudclusters.net' ,
 user: process.env.MYSQL_USERNAME || "admin",
 password: process.env.MYSQL_PASSWORD || "edJABCot", // sensitive
