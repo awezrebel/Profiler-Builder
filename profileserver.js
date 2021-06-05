@@ -154,7 +154,7 @@ c+=1;
 //mycon with database
 //aws rds
 
-var mycon = mysql.createConnection({
+const mycon = mysql.createConnection({
 connectionLimit: 10,
 acquireTimeout: 30000, //30 secs
 
