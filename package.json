@@ -18,7 +18,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "jest --detectOpenHandles",
+    "jest-test": "jest --forceExit ./Jest-test",   
     "start": "node server.js"
   },
   "repository": {
@@ -26,7 +26,7 @@
     "url": "git+https://github.com/awezrebel/Profiler-Builder.git"
   },
   "keywords": [],
-  "author": "jest --detectOpenHandles",
+  "author": "jest --forceExit ./Jest-test", 
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/awezrebel/Profiler-Builder/issues"
