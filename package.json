@@ -18,7 +18,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "jest --detectOpenHandles",
+    "test": "mocha",
     "start": "node server.js"
   },
   "repository": {
