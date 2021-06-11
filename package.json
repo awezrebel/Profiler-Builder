@@ -18,7 +18,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "mocha",
+    "test": "",
     "start": "node server.js"
   },
   "repository": {
@@ -26,7 +26,7 @@
     "url": "git+https://github.com/awezrebel/Profiler-Builder.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "jest --detectOpenHandles",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/awezrebel/Profiler-Builder/issues"
