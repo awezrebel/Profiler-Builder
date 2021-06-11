@@ -4,12 +4,25 @@ pipeline {
   tools {nodejs "node"}
     
   stages {
-        
-    stage('Git') {
-      steps {
-        git 'https://github.com/awezrebel/Profiler-Builder'
-      }
-    }
+    
+     stage('Cloning Git') {
+            steps {
+                git ''https://github.com/awezrebel/Profiler-Builder'.git'
+            }
+        }
+       
+     stage('Install dependencies') {
+            steps {
+                bat 'npm install'
+            }
+        }
+      
+     stage('Jest test'){
+            steps{
+                bat '''npm run jest-test'''
+            }
+        }
+   
      
     stage('Build') {
       steps {
@@ -19,10 +32,6 @@ pipeline {
     }  
     
             
-    stage('Test') {
-      steps {
-        sh 'npm test'
-      }
-    }
+   
   }
 }
