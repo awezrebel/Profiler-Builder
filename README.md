@@ -4,3 +4,4 @@ INDIAN
 army
 king
 and
+as
